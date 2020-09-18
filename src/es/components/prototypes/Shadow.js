@@ -98,6 +98,7 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
    * selector :host only works when shadow is active, fallback to id then nodeName
    *
    * @readonly
+   * @return {string}
    */
   get cssSelector () {
     return this.hasShadowRoot ? ':host' : this.getAttribute('id') ? `#${this.getAttribute('id')}` : this.nodeName
