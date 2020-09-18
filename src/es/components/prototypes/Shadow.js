@@ -42,8 +42,13 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
      * @type {mode}
      */
     this.mode = this.getMode(typeof masterArgs.mode === 'string' ? masterArgs.mode : this.getAttribute('mode'))
-    // @ts-ignore
-    if (this.hasShadowRoot) this.attachShadow({ mode: this.mode })
+    if (this.hasShadowRoot) {
+      // @ts-ignore
+      const shadowRoot = this.attachShadow({ mode: this.mode })
+      Array.from(this.children).forEach(node => {
+        if (!node.getAttribute('slot')) shadowRoot.appendChild(node)
+      })
+    }
   }
 
   /**
