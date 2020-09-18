@@ -29,6 +29,34 @@ export default class Button extends Shadow() {
     // TODO: test functionality Shadow
     // TODO: write unit test
 
+    this.renderCSS()
+    this.renderHTML()
+    this.button = this.root.querySelector('button')
+    this.label = this.root.querySelector('#label')
+    this.ripple = this.root.querySelector('.ripple')
+    this.clickListener = event => this.button.classList.add('active')
+    this.animationendListener = event => this.button.classList.remove('active')
+  }
+
+  connectedCallback () {
+    this.hasAttribute('label') ? this.label.textContent = this.getAttribute('label') : this.label.style.display = 'none'
+    this.button.addEventListener('click', this.clickListener)
+    this.ripple.addEventListener('animationend', this.animationendListener)
+  }
+
+  disconnectedCallback () {
+    this.button.removeEventListener('click', this.clickListener)
+    this.ripple.removeEventListener('animationend', this.animationendListener)
+  }
+
+  attributeChangedCallback (name) {
+    if (name === 'label') {
+      this.label.textContent = this.getAttribute('label') || ''
+      this.label.classList[this.hasAttribute('label') ? 'remove' : 'add']('hide')
+    }
+  }
+
+  renderCSS () {
     this.css = /* css */`
       :host {
         --button-color: transparent;
@@ -140,6 +168,9 @@ export default class Button extends Shadow() {
         }                
       }
     `
+  }
+
+  renderHTML () {
     this.html = /* html */`
       <button type="button">
         <div class="ripple"></div>
@@ -149,29 +180,6 @@ export default class Button extends Shadow() {
         <slot name="right-icon"></slot>
       </button>
     `
-    this.button = this.root.querySelector('button')
-    this.label = this.root.querySelector('#label')
-    this.ripple = this.root.querySelector('.ripple')
-    this.clickListener = event => this.button.classList.add('active')
-    this.animationendListener = event => this.button.classList.remove('active')
-  }
-
-  connectedCallback () {
-    this.hasAttribute('label') ? this.label.textContent = this.getAttribute('label') : this.label.style.display = 'none'
-    this.button.addEventListener('click', this.clickListener)
-    this.ripple.addEventListener('animationend', this.animationendListener)
-  }
-
-  disconnectedCallback () {
-    this.button.removeEventListener('click', this.clickListener)
-    this.ripple.removeEventListener('animationend', this.animationendListener)
-  }
-
-  attributeChangedCallback (name) {
-    if (name === 'label') {
-      this.label.textContent = this.getAttribute('label') || ''
-      this.label.classList[this.hasAttribute('label') ? 'remove' : 'add']('hide')
-    }
   }
 
   get disabled () {
