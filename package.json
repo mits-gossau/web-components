@@ -1,0 +1,19 @@
+{
+    "name": "web-components",
+    "version": "0.0.1-beta",
+    "description": "Reusable VanillaJS web components collection",
+    "main": "./src/index.html",
+    "scripts": {
+        "fix": "standard --fix"
+    },
+    "author": "weedshaker@gmail.com",
+    "license": "MIT",
+    "devDependencies": {
+        "standard": "*"
+    },
+    "standard": {
+        "ignore": [
+        "/test/"
+        ]
+    }
+}
