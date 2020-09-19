@@ -30,6 +30,7 @@ export default class Button extends Shadow() {
     // TODO: test functionality https://dannymoerkerke.github.io/material-webcomponents/material-button
     // TODO: test functionality Shadow
     // TODO: write unit test
+    // TODO: add https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
     // TODO: test it with mutationobserver and intersectionobserver
 
     if (this.shouldComponentRenderCSS()) this.renderCSS()
