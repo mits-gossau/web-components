@@ -12,6 +12,8 @@
  * @param {CustomElementConstructor} ChosenHTMLElement
  * @attribute {mode} [mode='open']
  * @property {
+    connectedCallback,
+    disconnectedCallback,
     Shadow.parseAttribute,
     getMode,
     mode,
@@ -28,10 +30,10 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
   /**
    * Creates an instance of Shadow. The constructor will be called for every custom element using this class when initially created.
    *
-   * @param {{mode?: mode | undefined}} [masterArgs = {mode: undefined}]
+   * @param {{mode?: mode | undefined}} [options = {mode: undefined}]
    * @param {*} args
    */
-  constructor (masterArgs = { mode: undefined }, ...args) {
+  constructor (options = { mode: undefined }, ...args) {
     super(...args)
 
     /**
@@ -41,7 +43,7 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
      *
      * @type {mode}
      */
-    this.mode = this.getMode(typeof masterArgs.mode === 'string' ? masterArgs.mode : this.getAttribute('mode'))
+    this.mode = this.getMode(typeof options.mode === 'string' ? options.mode : this.getAttribute('mode'))
     if (this.hasShadowRoot) {
       // @ts-ignore
       const shadowRoot = this.attachShadow({ mode: this.mode })
@@ -50,6 +52,20 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
       })
     }
   }
+
+  /**
+   * Lifecycle callback, triggered when node is attached to the dom
+   *
+   * @return {void}
+   */
+  connectedCallback () {}
+
+  /**
+   * Lifecycle callback, triggered when node is detached from the dom
+   *
+   * @return {void}
+   */
+  disconnectedCallback () {}
 
   /**
    * Helper function to parse object strings within attributes
