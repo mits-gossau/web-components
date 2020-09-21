@@ -1,5 +1,7 @@
 // @ts-check
 
+/* global IntersectionObserver */
+
 import { Shadow } from './Shadow.js'
 
 /**
@@ -28,7 +30,7 @@ import { Shadow } from './Shadow.js'
     }
  * @return {CustomElementConstructor | *}
  */
-export const IntersectionObserver = (ChosenClass = Shadow()) => class IntersectionObserver extends ChosenClass {
+export const Intersection = (ChosenClass = Shadow()) => class Intersection extends ChosenClass {
   /**
    * Creates an instance of IntersectionObserver. The constructor will be called for every custom element using this class when initially created.
    *

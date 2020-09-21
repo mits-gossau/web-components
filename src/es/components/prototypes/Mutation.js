@@ -1,5 +1,7 @@
 // @ts-check
 
+/* global MutationObserver */
+
 import { Shadow } from './Shadow.js'
 
 /**
@@ -33,7 +35,7 @@ import { Shadow } from './Shadow.js'
     }
  * @return {CustomElementConstructor | *}
  */
-export const MutationObserver = (ChosenClass = Shadow()) => class MutationObserver extends ChosenClass {
+export const Mutation = (ChosenClass = Shadow()) => class Mutation extends ChosenClass {
   /**
    * Creates an instance of MutationObserver. The constructor will be called for every custom element using this class when initially created.
    *
@@ -70,7 +72,7 @@ export const MutationObserver = (ChosenClass = Shadow()) => class MutationObserv
         /** @return {void} */
         this.mutationObserveStart = () => {
           // @ts-ignore
-          mutationObserver.observe(this.shadowRoot, restObserverInit)
+          if (restObserverInit.childList || restObserverInit.characterData) mutationObserver.observe(this.shadowRoot, restObserverInit)
           // @ts-ignore
           mutationObserver.observe(this, { attributeFilter, attributes, attributeOldValue })
         }
