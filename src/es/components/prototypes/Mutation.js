@@ -52,7 +52,7 @@ export const Mutation = (ChosenClass = Shadow()) => class Mutation extends Chose
      *
      * @type {MutationObserverInit}
      */
-    let mutationObserverInit = typeof options.mutationObserverInit === 'object' ? options.mutationObserverInit : MutationObserver.parseAttribute(this.getAttribute('mutationObserverInit'))
+    let mutationObserverInit = typeof options.mutationObserverInit === 'object' ? options.mutationObserverInit : Mutation.parseAttribute(this.getAttribute('mutationObserverInit'))
     if (mutationObserverInit && (mutationObserverInit.attributes || mutationObserverInit.characterData || mutationObserverInit.childList)) {
       /** @type {MutationObserver} */
       const mutationObserver = new MutationObserver(this.mutationCallback.bind(this))

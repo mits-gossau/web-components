@@ -7,6 +7,7 @@ import { Shadow } from '../../prototypes/Shadow.js'
  * https://github.com/DannyMoerkerke/material-webcomponents/blob/master/src/material-button.js
  *
  * @export
+ * @attribute {namespace} namespace
  * @type {CustomElementConstructor}
  */
 export default class Button extends Shadow() {
@@ -20,10 +21,8 @@ export default class Button extends Shadow() {
    * @param {*} args
    */
   constructor (...args) {
-    super(...args)
+    super({mode: 'open'}, ...args)
 
-    // querySelector s to getters
-    // this.root.querySelector('#label').style.display = 'none' to css style hide
     // TODO: icomoon
     // TODO: Test variables overwrite from outside [x] works but I want it width fallback instead of overwrite
     // TODO: msc styles (sizes, etc)
@@ -35,25 +34,24 @@ export default class Button extends Shadow() {
 
     if (this.shouldComponentRenderCSS()) this.renderCSS()
     if (this.shouldComponentRenderHTML()) this.renderHTML()
-    this.clickListener = event => this.root.querySelector('button').classList.add('active')
-    this.animationendListener = event => this.root.querySelector('button').classList.remove('active')
+    this.clickListener = event => this.button.classList.add('active')
+    this.animationendListener = event => this.button.classList.remove('active')
   }
 
   connectedCallback () {
-    this.hasAttribute('label') ? this.root.querySelector('#label').textContent = this.getAttribute('label') : this.root.querySelector('#label').style.display = 'none'
-    this.root.querySelector('button').addEventListener('click', this.clickListener)
-    this.root.querySelector('.ripple').addEventListener('animationend', this.animationendListener)
+    this.button.addEventListener('click', this.clickListener)
+    this.ripple.addEventListener('animationend', this.animationendListener)
   }
 
   disconnectedCallback () {
-    this.root.querySelector('button').removeEventListener('click', this.clickListener)
-    this.root.querySelector('.ripple').removeEventListener('animationend', this.animationendListener)
+    this.button.removeEventListener('click', this.clickListener)
+    this.ripple.removeEventListener('animationend', this.animationendListener)
   }
 
   attributeChangedCallback (name) {
     if (name === 'label') {
-      this.root.querySelector('#label').textContent = this.getAttribute('label') || ''
-      this.root.querySelector('#label').classList[this.hasAttribute('label') ? 'remove' : 'add']('hide')
+      this.label.textContent = this.getAttribute('label') || ''
+      this.label.classList[this.hasAttribute('label') ? 'remove' : 'add']('hide')
     }
   }
 
@@ -72,7 +70,7 @@ export default class Button extends Shadow() {
    * @return {boolean}
    */
   shouldComponentRenderHTML () {
-    return !this.root.querySelector('button') || !this.root.querySelector('#label') || !this.root.querySelector('.ripple')
+    return !this.button || !this.label || !this.ripple
   }
 
   renderCSS () {
@@ -206,7 +204,19 @@ export default class Button extends Shadow() {
   }
 
   set disabled (isDisabled) {
-    this.root.querySelector('button').disabled = isDisabled
+    this.button.disabled = isDisabled
     isDisabled ? this.setAttribute('disabled', '') : this.removeAttribute('disabled')
+  }
+
+  get button() {
+    return this.root.querySelector('button')
+  }
+
+  get label() {
+    return this.root.querySelector('#label')
+  }
+
+  get ripple() {
+    return this.root.querySelector('.ripple')
   }
 }

@@ -13,7 +13,7 @@
     },
     "standard": {
         "ignore": [
-        "/test/"
+            "/test/"
         ]
     }
 }

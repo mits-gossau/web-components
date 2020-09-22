@@ -6,11 +6,11 @@
 </head>
 <body>
   <style>
-    mui-button {
-      --button-color: rgb(0, 188, 212);
+    body mui-button {
+      --mybutton-button-color: rgb(0, 188, 212);
     }
   </style>
-  <mui-button label="Confirm" mode="open">
+  <mui-button label="Confirm" namespace="mybutton-">
     <i class="material-icons" slot="left-icon">add</i>
     <i class="material-icons" slot="right-icon">close</i>
   </mui-button>
