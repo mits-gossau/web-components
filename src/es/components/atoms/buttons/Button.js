@@ -21,7 +21,7 @@ export default class Button extends Shadow() {
    * @param {*} args
    */
   constructor (...args) {
-    super({mode: 'open'}, ...args)
+    super({ mode: 'open' }, ...args)
 
     // TODO: icomoon
     // TODO: Test variables overwrite from outside [x] works but I want it width fallback instead of overwrite
@@ -208,15 +208,15 @@ export default class Button extends Shadow() {
     isDisabled ? this.setAttribute('disabled', '') : this.removeAttribute('disabled')
   }
 
-  get button() {
+  get button () {
     return this.root.querySelector('button')
   }
 
-  get label() {
+  get label () {
     return this.root.querySelector('#label')
   }
 
-  get ripple() {
+  get ripple () {
     return this.root.querySelector('.ripple')
   }
 }
