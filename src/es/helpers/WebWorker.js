@@ -73,7 +73,7 @@ export default class WebWorker {
       const doesRun = worker(data, (err, result) => {
         if (err) {
           reject(err)
-          console.warn(`SST: Error at webworker -> ${err.message}`)
+          console.warn(`Error at webworker -> ${err.message}`)
         }
         resolve(result)
       })
