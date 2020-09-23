@@ -21,6 +21,7 @@ export default class Button extends Shadow() {
 
     this.clickListener = event => this.button.classList.add('active')
     this.animationendListener = event => this.button.classList.remove('active')
+    this.labelText = this.textContent // allow its initial textContent to become the label
   }
 
   connectedCallback () {
