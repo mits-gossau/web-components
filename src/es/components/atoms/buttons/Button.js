@@ -3,6 +3,7 @@
 import { Shadow } from '../../prototypes/Shadow.js'
 
 /**
+ * Creates an MSWC Button by the blueprints of:
  * https://components.migros.ch/components/atoms/buttons.html
  * https://github.com/DannyMoerkerke/material-webcomponents/blob/master/src/material-button.js
  *
@@ -15,30 +16,16 @@ export default class Button extends Shadow() {
     return ['label']
   }
 
-  /**
-   * Creates an MSC Button
-   *
-   * @param {*} args
-   */
-  constructor (...args) {
-    super({ mode: 'open' }, ...args)
+  constructor () {
+    super({ mode: 'open' })
 
-    // TODO: icomoon
-    // TODO: Test variables overwrite from outside [x] works but I want it width fallback instead of overwrite
-    // TODO: msc styles (sizes, etc)
-    // TODO: test functionality https://dannymoerkerke.github.io/material-webcomponents/material-button
-    // TODO: test functionality Shadow
-    // TODO: write unit test
-    // TODO: add https://developer.mozilla.org/en-US/docs/Web/API/ResizeObserver
-    // TODO: test it with mutationobserver and intersectionobserver
-
-    if (this.shouldComponentRenderCSS()) this.renderCSS()
-    if (this.shouldComponentRenderHTML()) this.renderHTML()
     this.clickListener = event => this.button.classList.add('active')
     this.animationendListener = event => this.button.classList.remove('active')
   }
 
   connectedCallback () {
+    if (this.shouldComponentRenderCSS()) this.renderCSS()
+    if (this.shouldComponentRenderHTML()) this.renderHTML()
     this.button.addEventListener('click', this.clickListener)
     this.ripple.addEventListener('animationend', this.animationendListener)
   }
@@ -48,10 +35,13 @@ export default class Button extends Shadow() {
     this.ripple.removeEventListener('animationend', this.animationendListener)
   }
 
-  attributeChangedCallback (name) {
+  attributeChangedCallback (name, oldValue, newValue) {
     if (name === 'label') {
-      this.label.textContent = this.getAttribute('label') || ''
-      this.label.classList[this.hasAttribute('label') ? 'remove' : 'add']('hide')
+      this.labelText = newValue
+      if (this.label) {
+        this.label.textContent = this.labelText || ''
+        this.label.classList[this.labelText ? 'remove' : 'add']('hide')
+      }
     }
   }
 
@@ -76,112 +66,131 @@ export default class Button extends Shadow() {
   renderCSS () {
     this.css = /* css */`
       :host {
-        --button-color: transparent;
-        --button-color-hover: #e2e2e2;
-        --font-color: #000000;
-        --font-size: 1em;
-        --icon-size: 24px;
-        --button-padding: 0 8px 0 8px;
-        --button-padding-circle: 8px;
-        --border-radius: 2px;
+        --default-border-color: #a33307;
+        --default-border-radius: 4px;
+        --default-button-color-disabled: #ff9b58;
+        --default-button-color-hover: #cc5200;
+        --default-button-color: #ff6600;
+        --default-button-width: auto;
+        --default-font-color: white;
+        --default-font-family: "Helvetica Neue Condensed", "Impact", arial, sans-serif;
+        --default-font-size: inherit;
+        --default-icon-size: 24px;
         display: block;
-        width: fit-content;
-      }
-      :host([raised]) {
-        --button-color: #e2e2e2;
       }
       button {
-        border: none;
-        border-radius: var(--border-radius);
-        min-height: 36px;
-        padding: var(--button-padding);
-        font-size: var(--font-size);
-        color: var(--font-color);
-        background-color: var(--button-color);
-        cursor: pointer;
-        outline: none;
-        display: flex;
         align-items: center;
+        background-color: var(--button-color, var(--default-button-color));
+        border: none;
+        border-bottom:2px solid var(--border-color, var(--default-border-color));
+        border-radius: var(--border-radius, var(--default-border-radius));
+        color: var(--font-color, var(--default-font-color));
+        cursor: pointer;
+        display: flex;
         justify-content: center;
-        position: relative;
+        letter-spacing: .5px;
+        outline: none;
         overflow: hidden;
-      }
-      :host([label]) button {
-        min-width: 88px;
+        padding: 11px 15px 9px;
+        position: relative;
+        touch-action: manipulation;
+        width: var(--button-width, var(--default-button-width));
       }
       button:hover {
+        background-color: var(--button-color-hover, var(--default-button-color-hover));
         transition: background-color 0.3s ease-out;
-        background-color: var(--button-color-hover);
+      }
+      button.active .ripple {
+        animation-duration: 0.4s;
+        animation-name: ripple;
+        animation-timing-function: ease-out;
+        background-color: #808080;
+        border-radius: 50%;
+        left: 50%;
+        position: absolute;
+        top: 50%;
+        transform: translate(-50%, -50%);
       }
       :host([disabled]) button {
-        opacity: 0.5;
         cursor: not-allowed;
+        opacity: 0.5;
       }
       :host([disabled]) button:hover {
-        background-color: transparent;
+        background-color: var(--button-color-disabled, var(--default-button-color-disabled));
       }
       :host([disabled]) button .ripple {
         display: none;
       }
-      button.active .ripple {
-        animation-name: ripple;
-        animation-duration: 0.4s;
-        animation-timing-function: ease-out;
-        background-color: #808080;
+      :host([circle]) button {
+        padding: 8px;
         border-radius: 50%;
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        transform: translate(-50%, -50%);
+      }
+      :host([small]) button {
+        padding: 6px 10px 4px;
+      }
+      :host([big]) button {
+        padding: 16px 20px 14px;
+      }
+      :host([outline]) button {
+        background-color: transparent;
+        border: 2px solid var(--button-color, var(--default-button-color));
+        color: var(--button-color, var(--default-button-color));
+      }
+      :host([raised]) button {
+        background-color: var(--button-color, var(--default-button-color));
+        border: none;
+        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
+      }
+      :host([raised]) button:hover {
+        background-color: var(--button-color-hover, var(--default-button-color-hover));
+      }
+      :host([raised]) button[disabled]:hover {
+        background-color: var(--button-color, var(--default-button-color));
       }
       #label {
         display: inline-block;
+        font-family: var(--font-family, var(--default-font-family));
+        font-size: var(--font-size, var(--default-font-size));
+        font-weight: 700;
         position: relative;
-        margin-right: 8px;
-        margin-left: 8px;
+        text-transform: uppercase;
       }
       #label.hide {
         display: none;
       }
-      :host([circle]) button {
-        border-radius: 50%;
-        --button-padding: var(--button-padding-circle);
-      }
-      :host([raised]) button {
-        background-color: var(--button-color);
-        box-shadow: rgba(0, 0, 0, 0.12) 0px 1px 6px, rgba(0, 0, 0, 0.12) 0px 1px 4px;
-      }
-      :host([raised]) button[disabled]:hover {
-        background-color: var(--button-color);
-      }
       ::slotted([slot="left-icon"]) {
-        float: left;
-        font-size: var(--icon-size) !important;
+        font-size: var(--icon-size, var(--default-icon-size)) !important;
+      }
+      :host([label]) ::slotted([slot="left-icon"]) {
+        margin-right: 8px;
       }
       ::slotted([slot="right-icon"]) {
-        float: right;
-        font-size: var(--icon-size) !important;
+        font-size: var(--icon-size, var(--default-icon-size)) !important;
+      }
+      :host([label]) ::slotted([slot="right-icon"]) {
+        margin-left: 8px;
       }
       ::slotted([slot="file-input"]) {
-        position: absolute;
-        top: 0;
-        left: 0;
         bottom: 0;
-        right: 0;
+        cursor: pointer;
+        left: 0;
         opacity: 0;
+        position: absolute;
+        right: 0;
+        top: 0;
+        width: 100%;
         z-index: 9;
       }
-      
       @keyframes ripple {
         from {
-          width: 0;
           height: 0;
           opacity: 0.8;
+          width: 0;
         }
         to {
-          width: 100px;
           height: 100px;
           opacity: 0.1;
+          width: 100px;
         }                
       }
     `
@@ -193,7 +202,7 @@ export default class Button extends Shadow() {
         <div class="ripple"></div>
         <slot name="file-input"></slot>
         <slot name="left-icon"></slot>
-        <span id="label"></span>
+        <span id="label"${!this.labelText ? ' class="hide"' : ''}>${this.labelText || ''}</span>
         <slot name="right-icon"></slot>
       </button>
     `
