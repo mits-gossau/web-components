@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../../../../css/fonts.css">
+  <title>Image.js</title>
+</head>
+<style>
+  li {
+    padding-bottom: 15px;
+  }
+</style>
+<body>
+  <h1>Image.js</h1>
+  <div class="temp-image-container"></div>
+  <script rel=preload type=module>
+    /**
+     * First level controllers and organisms are loaded and defined here (loadChildComponents)
+     */
+    import('./Image.js').then(module => ['m-image', module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) customElements.define(...element)
+      const myImg = new element[1]({
+          paths: {
+            small: 'http://localhost/web-components/src/temp-assets/wallpaper_25.png',
+            medium: 'http://localhost/web-components/src/temp-assets/wallpaper_50.png',
+            large: 'http://localhost/web-components/src/temp-assets/wallpaper_100.png'
+          },
+          description: 'What a nice image!'
+        })
+        document.querySelector('.temp-image-container').appendChild(myImg);
+    })
+  </script>
+</body>
+</html>

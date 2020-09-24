@@ -1,11 +1,11 @@
-import { Shadow } from "../prototypes/Shadow.js";
+import { Shadow } from "../../prototypes/Shadow.js";
 
 /**
  * Image Coponents
  * @param {Object} img - The image obejct, containig paths and description.
  */
 export default class ImageComponent extends Shadow(){
-  constructor(img,){
+  constructor(img){
     super({ mode: 'open' })
 
     // TBD check img Object validity
