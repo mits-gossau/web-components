@@ -5,8 +5,8 @@ import { Shadow } from "../prototypes/Shadow.js";
  * @param {Object} img - The image obejct, containig paths and description.
  */
 export default class ImageComponent extends Shadow(){
-  constructor(img,...args){
-    super(...args)
+  constructor(img,){
+    super({ mode: 'open' })
 
     // TBD check img Object validity
     // temporary check if a none emtpy object was passed
