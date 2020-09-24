@@ -3,29 +3,13 @@
 <head>
   <meta charset="utf-8">
   <title>MSWC</title>
+  <script rel=preload type=module>import('./es/helpers/Debugging.js')</script>
 </head>
 <body>
-  <style>
-    mui-button {
-      --button-color: rgb(0, 188, 212);
-    }
-  </style>
-  <mui-button label="Confirm" mode="open">
-    <i class="material-icons" slot="left-icon">add</i>
-    <i class="material-icons" slot="right-icon">close</i>
-  </mui-button>
-  <script rel=preload type=module>
-    /**
-     * First level controllers and organisms are loaded and defined here (loadChildComponents)
-     */
-    Promise.all([
-      // Helpers
-      import('./es/helpers/Debugging.js').then(module => null),
-      import('./es/components/atoms/buttons/Button.js').then(module => ['mui-button', module.default]),
-    ]).then(elements => elements.forEach(element => {
-      // don't define already existing customElements
-      if (element && !customElements.get(element[0])) customElements.define(...element)
-    }))
-  </script>
+  <h1>MSWC</h1>
+  <h3>Buttons</h3>
+  <ol>
+    <li><a href="./es/components/atoms/buttons/Button.html">atoms/buttons/Button.js</a></li>
+  </ol>
 </body>
 </html>

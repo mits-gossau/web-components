@@ -11,12 +11,14 @@
  * @function Shadow
  * @param {CustomElementConstructor} ChosenHTMLElement
  * @attribute {mode} [mode='open']
+ * @attribute {namespace} namespace
  * @property {
     connectedCallback,
     disconnectedCallback,
     Shadow.parseAttribute,
     getMode,
     mode,
+    namespace,
     hasShadowRoot,
     root,
     cssSelector,
@@ -30,10 +32,11 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
   /**
    * Creates an instance of Shadow. The constructor will be called for every custom element using this class when initially created.
    *
-   * @param {{mode?: mode | undefined}} [options = {mode: undefined}]
+   * @param {{mode?: mode | undefined, namespace?: string | undefined}} [options = {mode: undefined, namespace: undefined}]
    * @param {*} args
    */
-  constructor (options = { mode: undefined }, ...args) {
+  constructor (options = { mode: undefined, namespace: undefined }, ...args) {
+    // @ts-ignore
     super(...args)
 
     /**
@@ -51,6 +54,8 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
         if (!node.getAttribute('slot')) shadowRoot.appendChild(node)
       })
     }
+    /** @type {string} */
+    this.namespace = typeof options.namespace === 'string' ? options.namespace : this.getAttribute('namespace') || ''
   }
 
   /**
@@ -143,10 +148,18 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
     if (!this._css) {
       /** @type {HTMLStyleElement} */
       this._css = document.createElement('style')
+      this._css.setAttribute('_css', '')
       this._css.setAttribute('protected', 'true') // this will avoid deletion by html=''
       this.root.appendChild(this._css)
     }
-    this._css.textContent = (!this._css.textContent ? style : !style ? '' : this._css.textContent + '\n' + style).replace(/:host\s{0,5}/g, `${this.cssSelector} `)
+    if (!style) {
+      this._css.textContent = ''
+    } else {
+      let textContent = this._css.textContent + style
+      if (!this.hasShadowRoot) textContent = textContent.replace(/:host\s{0,5}/g, `${this.cssSelector} `)
+      if (this.namespace) textContent = textContent.replace(/--/g, `--${this.namespace}`)
+      this._css.textContent = textContent
+    }
   }
 
   /**
