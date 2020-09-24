@@ -11,6 +11,9 @@
 *.launch
 .settings/
 
+# temp data
+/src/temp-assets
+
 
 #System Files
 .DS_Store
