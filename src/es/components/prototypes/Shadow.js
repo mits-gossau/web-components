@@ -148,6 +148,7 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
     if (!this._css) {
       /** @type {HTMLStyleElement} */
       this._css = document.createElement('style')
+      this._css.setAttribute('_css', '')
       this._css.setAttribute('protected', 'true') // this will avoid deletion by html=''
       this.root.appendChild(this._css)
     }

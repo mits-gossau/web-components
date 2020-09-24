@@ -52,7 +52,7 @@ export default class Button extends Shadow() {
    * @return {boolean}
    */
   shouldComponentRenderCSS () {
-    return !this.root.querySelector('style[protected="true"]')
+    return !this.root.querySelector('style[_css]')
   }
 
   /**

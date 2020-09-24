@@ -1,0 +1,27 @@
+@font-face {
+  font-family: 'Helvetica Neue';
+  src: url('../fonts/helveticaneue-roman.woff');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue';
+  font-weight: 700;
+  src: url('../fonts/helveticaneue-bold.woff');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Black';
+  font-weight: 700;
+  src: url('../fonts/helveticaneue-black.woff');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Condensed';
+  src: url('../fonts/helveticaneue-condensed.woff');
+}
+
+@font-face {
+  font-family: 'Helvetica Neue Condensed';
+  font-weight: 700;
+  src: url('../fonts/helveticaneue-condensed-bold.woff');
+}
