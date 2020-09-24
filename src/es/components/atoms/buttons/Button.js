@@ -21,7 +21,7 @@ export default class Button extends Shadow() {
 
     this.clickListener = event => this.button.classList.add('active')
     this.animationendListener = event => this.button.classList.remove('active')
-    this.labelText = this.textContent // allow its initial textContent to become the label
+    if (!this.children.length) this.labelText = this.textContent // allow its initial textContent to become the label if there are no nodes but only text
   }
 
   connectedCallback () {
@@ -67,15 +67,17 @@ export default class Button extends Shadow() {
   renderCSS () {
     this.css = /* css */`
       :host {
-        --default-border-color: #a33307;
+        --default-border-color: #de450a;
+        --default-border-color-disabled: #e9855f;
+        --default-border-color-hover: #a33307;
         --default-border-radius: 4px;
-        --default-button-color-disabled: #ff9b58;
         --default-button-color-hover: #cc5200;
         --default-button-color: #ff6600;
         --default-button-width: auto;
         --default-font-color: white;
+        --default-font-color-hover: white;
         --default-font-family: "Helvetica Neue Condensed", "Impact", arial, sans-serif;
-        --default-font-size: inherit;
+        --default-font-size: 14px;
         --default-icon-size: 24px;
         display: block;
       }
@@ -95,11 +97,13 @@ export default class Button extends Shadow() {
         padding: 11px 15px 9px;
         position: relative;
         touch-action: manipulation;
+        transition: background-color 0.3s ease-out, border-bottom-color 0.3s ease-out, color 0.3s ease-out;
         width: var(--button-width, var(--default-button-width));
       }
       button:hover {
         background-color: var(--button-color-hover, var(--default-button-color-hover));
-        transition: background-color 0.3s ease-out;
+        border-bottom: 2px solid var(--border-color-hover, var(--default-border-color-hover));
+        color: var(--font-color-hover, var(--default-font-color-hover));
       }
       button.active .ripple {
         animation-duration: 0.4s;
@@ -115,9 +119,10 @@ export default class Button extends Shadow() {
       :host([disabled]) button {
         cursor: not-allowed;
         opacity: 0.5;
+        transition: opacity 0.3s ease-out;
       }
       :host([disabled]) button:hover {
-        background-color: var(--button-color-disabled, var(--default-button-color-disabled));
+        opacity: 0.3;
       }
       :host([disabled]) button .ripple {
         display: none;
@@ -129,13 +134,18 @@ export default class Button extends Shadow() {
       :host([small]) button {
         padding: 6px 10px 4px;
       }
-      :host([big]) button {
+      :host([large]) button {
         padding: 16px 20px 14px;
       }
       :host([outline]) button {
         background-color: transparent;
         border: 2px solid var(--button-color, var(--default-button-color));
         color: var(--button-color, var(--default-button-color));
+        transition: border-color 0.3s ease-out, color 0.3s ease-out;
+      }
+      :host([outline]) button:hover {
+        border-color: var(--button-color-hover, var(--default-button-color-hover));
+        color: var(--button-color-hover, var(--default-button-color-hover));
       }
       :host([raised]) button {
         background-color: var(--button-color, var(--default-button-color));

@@ -3,80 +3,106 @@
 <head>
   <meta charset="utf-8">
   <link rel="stylesheet" href="../../../../css/fonts.css">
+  <link rel="stylesheet" href="../../../../css/style.css">
   <title>Button.js</title>
 </head>
-<style>
-  li {
-    padding-bottom: 15px;
-  }
-</style>
 <body>
   <h1>Button.js</h1>
-  <ol>
-    <li><mui-button small>small</mui-button></li>
-    <li><mui-button label="default"></mui-button></li>
-    <li><mui-button big label="big">big</mui-button></li>
-    <li><mui-button disabled label="disabled"></mui-button></li>
-    <li><h4>Button with button-width variable namespaced</h4>
+  <dl>
+    <dt><mui-button small>small</mui-button></dt>
+    <dt><mui-button label="default"></mui-button></dt>
+    <dt><mui-button large label="large">label trumps innerText</mui-button></dt>
+    <dt><mui-button disabled>disabled</mui-button></dt>
+    <dt><p>Button with button-width variable namespaced</p>
       <style>
         html {
           --width-button-width: 100%;
         }
       </style>
       <mui-button label="width" namespace="width-"></mui-button>
-    </li>
-    <li>
-      <h4>Button with button-color variables namespaced and one slot icon left</h4>
+    </dt>
+    <dt>
+      <p>Button with button-color variables namespaced and one slot icon left</p>
       <style>
         html {
           --confirm-button-color: lightgreen;
           --confirm-button-color-hover: green;
+          --confirm-border-color: rgb(121, 240, 121);
+          --confirm-border-color-hover: rgb(2, 100, 2);
         }
       </style>
       <mui-button label="confirm" namespace="confirm-">
         <i slot="left-icon">&#10010;</i>
       </mui-button>
-    </li>
-    <li>
-      <h4>Button with button-color variables namespaced and one icon right</h4>
+    </dt>
+    <dt>
+      <p>Button naked</p>
+      <style>
+        html {
+          --naked-button-color: transparent;
+          --naked-button-color-hover: transparent;
+          --naked-border-color: transparent;
+          --naked-border-color-hover: transparent;
+          --naked-font-color: #ff6600;
+          --naked-font-color-hover: #cc5200;
+        }
+      </style>
+      <mui-button label="naked" namespace="naked-"></mui-button>
+    </dt>
+    <dt>
+      <p>Button with button-color variables namespaced and one icon right</p>
       <style>
         html {
           --decline-button-color: red;
           --decline-button-color-hover: pink;
+          --decline-border-color: rgb(212, 4, 4);
+          --decline-border-color-hover: rgb(235, 133, 150);
         }
       </style>
       <mui-button label="decline" namespace="decline-">
         <i type="file" slot="right-icon">&#10008;</i>
       </mui-button>
-    </li>
-    <li>
-      <h4>Button with circle attribute one slot icon right</h4>
+    </dt>
+    <dt>
+      <p>Button with circle attribute one slot icon right</p>
       <mui-button circle>
         <i type="file" slot="right-icon">&#9728;</i>
       </mui-button>
-    </li>
-    <li><mui-button outline label="outline"></mui-button></li>
-    <li><mui-button raised label="raised"></mui-button></li>
-    <li><mui-button raised disabled label="raised disabled"></mui-button></li>
-    <li>
-      <h4>Button with one slot file-input</h4>
+    </dt>
+    <dt><mui-button outline label="outline"></mui-button></dt>
+    <dt><mui-button raised label="raised"></mui-button></dt>
+    <dt><mui-button raised disabled label="raised disabled"></mui-button></dt>
+    <dt>
+      <p>Button with one slot file-input</p>
       <mui-button label="file-input">
         <input type="file" slot="file-input">
       </mui-button>
-    </li>
-  </ol>
+    </dt>
+  </dl>
   <script rel=preload type=module>
     /**
      * First level controllers and organisms are loaded and defined here (loadChildComponents)
      */
-    import('./Button.js').then(module => ['mui-button', module.default]).then(element => {
+    const name = 'mui-button'
+    import('./Button.js').then(module => [name, module.default]).then(element => {
       // don't define already existing customElements
       if (element && !customElements.get(element[0])) customElements.define(...element)
     })
-    Array.from(document.querySelectorAll('li')).forEach(li => {
-      const code = document.createElement('code')
-      code.textContent = li.innerHTML.replace(/<h4>.*?<\/h4>/, '').replace(/=""/g, '')
-      li.appendChild(code)
+    Array.from(document.querySelectorAll('dt')).forEach(dt => {
+      const dd = document.createElement('dd')
+      if (dt.querySelector('style')) {
+        const codeCSS = document.createElement('code')
+        codeCSS.classList.add('code-css')
+        codeCSS.textContent = dt.querySelector('style').textContent
+        dd.appendChild(codeCSS)
+      }
+      if (dt.querySelector(name)) {
+        const codeHTML = document.createElement('code')
+        codeHTML.classList.add('code-html')
+        codeHTML.textContent = dt.querySelector(name).outerHTML.replace(/=""/g, '').replace(/\n[\s]{8}/, '\n  ').replace(/\n[\s]*?(\<\/)/, '\n$1')
+        dd.appendChild(codeHTML)
+      }
+      dt.after(dd)
     })
   </script>
 </body>

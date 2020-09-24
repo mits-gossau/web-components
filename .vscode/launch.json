@@ -10,7 +10,7 @@
         "request": "launch",
         "reAttach": false,
         "reloadOnChange": {
-          "watch": ["${workspaceFolder}/src/**/*.js", "${workspaceFolder}/src/**/*.html"],
+          "watch": ["${workspaceFolder}/src/**/*.js", "${workspaceFolder}/src/**/*.html", , "${workspaceFolder}/src/**/*.css"],
           "ignore": "**/node_modules/**"
         },
         "internalConsoleOptions": "openOnSessionStart",
@@ -24,7 +24,7 @@
         "request": "launch",
         "reAttach": false,
         "reloadOnChange": {
-          "watch": ["${workspaceFolder}\\src\\**\\*.js", "${workspaceFolder}\\src\\**\\*.html"],
+          "watch": ["${workspaceFolder}\\src\\**\\*.js", "${workspaceFolder}\\src\\**\\*.html", "${workspaceFolder}\\src\\**\\*.css"],
           "ignore": "**\\node_modules\\**"
         },
         "internalConsoleOptions": "openOnSessionStart",
