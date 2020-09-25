@@ -1,71 +1,82 @@
-import { Shadow } from "../../prototypes/Shadow.js";
+//@ts-check
+
+import{ Intersection } from '../../prototypes/Intersection.js';
 
 /**
- * Image Coponents
- * @param {Object} img - The image obejct, containig paths and description.
+ * Creates a picture element with the given images
+ * 
+ * @exports
+ * @type {CustomElementConstructor}
  */
-export default class ImageComponent extends Shadow(){
-  constructor(img){
-    super({ mode: 'open' })
-
-    // TBD check img Object validity
-    // temporary check if a none emtpy object was passed
-    if(img && Object.keys(img).length >= 1){
-      this.renderHTML(img)
-      this.renderCSS()
-    }
+export default class Image extends Intersection(){
+  static get observedAttributes () {
+    return [
+      'small',
+      'medium',
+      'large'
+    ]
   }
 
-  connectedCallback () {}
-
-  disconnectedCallback () {}
-
-
-  renderHTML (img) {
-    this.html = /* html */`
-      <div class="image-wrapper">
-        <picture>
-          <source srcset="${img.paths.small} 768w, ${img.paths.medium} 1000w, ${img.paths.large} 1200w">
-          <img src="${img.paths.medium}" />
-        </picture>  
-        <p>${img.description}</p>
-      </div>
-    `
+  constructor () {
+    super({intersectionObserverInit: {}});
   }
 
-  //Some example Css
+  connectedCallback(){
+    console.log(this,  'connectedCallback');
+    if (this.shouldComponentRenderCSS()) this.renderCSS()
+    if (this.shouldComponentRenderHTML()) this.renderHTML()
+  }
+
+  disconnectedCallback(){
+    console.log('disconnectedCallback');
+  }
+
+  attributeChangedCallback (name,oldValue, newValue){
+    console.log('attributeChangedCallback');
+    if(name === 'small') this.smallImg = newValue;
+    if(name === 'medium') this.mediumImg = newValue;
+    if(name === 'large') this.largeImg = newValue;
+  }
+
+  intersectionCallback () {
+    console.log('intersectionCallback');
+    //TBD lazy loading
+  }
+
+   /**
+   * evaluates if a render is necessary
+   *
+   * @return {boolean}
+   */
+  shouldComponentRenderCSS () {
+    return !this.root.querySelector('style[_css]')
+  }
+
+  /**
+   * evaluates if a render is necessary
+   *
+   * @return {boolean}
+   */
+  shouldComponentRenderHTML () {
+    return this.smallImg || this.mediumImg || this.largeImg;
+  }
+
   renderCSS () {
     this.css = /* css */`
-      .image-wrapper{
-        max-width: 50vw;
-        animation: fadeIn 1s
-      }
-
-      .image-wrapper img {
+      .m-image img {
         object-fit: cover;
         width: 100%;
         height: 100%;
       }
+    `
+  }
 
-      .image-wrapper p {
-        margin: 0;
-        width: 100%;
-        padding: 10px;
-        background-color: #03162f;
-        box-sizing: border-box;
-        color: white;
-      }
-
-      @keyframes fadeIn{
-        0%{
-          transform: translateY(20px);
-          opacity: 0;
-        }
-        100%{
-          transform: translateY(0);
-          opacity: 1;
-        }
-      }
+  renderHTML(){
+    this.html = /* html */`
+    <picture class="m-image">
+      <source srcset="${this.smallImg ? this.smallImg + ' 768w': ''}, ${this.mediumImg ? this.mediumImg + ' 1000w': ''}, ${this.largeImg ? this.largeImg + ' 1200w': ''}">
+      <img src="${this.mediumImg}" />
+    </picture>  
     `
   }
 }
