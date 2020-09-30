@@ -12,14 +12,48 @@
 </style>
 <body>
   <h1>Image.js</h1>
+  <p>Image which accepts multiple sources and displays them according to screen size and always covers the container it's in.</p>
   <div>
     <m-image 
       small="http://localhost/web-components/src/temp-assets/wallpaper_25.png"
       medium="http://localhost/web-components/src/temp-assets/wallpaper_50.png"
       large="http://localhost/web-components/src/temp-assets/wallpaper_100.png"
-    > </m-image>
+      height="151"
+      width="600"
+    ></m-image>
   </div>
-  <div class="temp-image-container"></div>
+  <p>Container 10% width</p>
+  <div class="width-50">
+    <m-image 
+      small="http://localhost/web-components/src/temp-assets/wallpaper_25.png"
+      medium="http://localhost/web-components/src/temp-assets/wallpaper_50.png"
+      large="http://localhost/web-components/src/temp-assets/wallpaper_100.png"
+      width="200"
+      height="200"
+      placeholderColor="#ff0000"
+    ></m-image>
+  </div>
+  <p>Container 50% width</p>
+  <div class="width-100">
+    <m-image 
+      small="http://localhost/web-components/src/temp-assets/wallpaper_25.png"
+      medium="http://localhost/web-components/src/temp-assets/wallpaper_50.png"
+      large="http://localhost/web-components/src/temp-assets/wallpaper_100.png"
+    ></m-image>
+  </div>
+  <p>Container 100% width</p>
+  <style>
+    .width-10{
+      width: 10vw;
+    }
+    .width-50{
+      width: 50vw;
+    }
+    .width-100{
+      width: 100vw;
+      height: 400px;
+    }
+  </style>
   <script rel=preload type=module>
     /**
      * First level controllers and organisms are loaded and defined here (loadChildComponents)

@@ -9,38 +9,36 @@ import{ Intersection } from '../../prototypes/Intersection.js';
  * @type {CustomElementConstructor}
  */
 export default class Image extends Intersection(){
-  static get observedAttributes () {
-    return [
-      'small',
-      'medium',
-      'large'
-    ]
-  }
 
   constructor () {
     super({intersectionObserverInit: {}});
   }
 
   connectedCallback(){
-    console.log(this,  'connectedCallback');
-    if (this.shouldComponentRenderCSS()) this.renderCSS()
-    if (this.shouldComponentRenderHTML()) this.renderHTML()
+      this.css= /* css */`
+      :host > picture > svg {
+        display: block;
+      }
+      :host > picture > * {
+        height: auto;
+        width: 100%;
+        max-width: ${this.width};
+      }
+      `
+      this.html = /* html */`<picture class=placeholder><svg style="background-color: ${this.placeholderColor ? this.placeholderColor : '#808080'}; width:100%; height:100%;" width="${this.width}" height="${this.height}"></svg></picture>`
+      super.connectedCallback()
   }
 
   disconnectedCallback(){
-    console.log('disconnectedCallback');
+    super.disconnectedCallback();
   }
 
-  attributeChangedCallback (name,oldValue, newValue){
-    console.log('attributeChangedCallback');
-    if(name === 'small') this.smallImg = newValue;
-    if(name === 'medium') this.mediumImg = newValue;
-    if(name === 'large') this.largeImg = newValue;
-  }
-
-  intersectionCallback () {
-    console.log('intersectionCallback');
-    //TBD lazy loading
+  intersectionCallback (entries) {
+    if(entries[0] && entries[0].isIntersecting){
+      if (this.shouldComponentRenderCSS()) this.renderCSS()
+      if (this.shouldComponentRenderHTML()) this.renderHTML()
+      this.intersectionObserveStop()
+    }
   }
 
    /**
@@ -58,25 +56,55 @@ export default class Image extends Intersection(){
    * @return {boolean}
    */
   shouldComponentRenderHTML () {
-    return this.smallImg || this.mediumImg || this.largeImg;
+    return !this.root.querySelector('.m-image');
   }
 
   renderCSS () {
     this.css = /* css */`
       .m-image img {
         object-fit: cover;
-        width: 100%;
-        height: 100%;
+        width: ${this.width};
+        height: ${this.height};
+        max-width: 100%;
+        max-height: 100%;
+        background-color: ${this.placeholderColor ? this.placeholderColor : '#808080'};
       }
     `
   }
 
   renderHTML(){
-    this.html = /* html */`
+    let picture = document.createElement("picture");
+    picture.innerHTML = /* html */`
     <picture class="m-image">
       <source srcset="${this.smallImg ? this.smallImg + ' 768w': ''}, ${this.mediumImg ? this.mediumImg + ' 1000w': ''}, ${this.largeImg ? this.largeImg + ' 1200w': ''}">
-      <img src="${this.mediumImg}" />
+      <img src="${this.mediumImg ? this.mediumImg : this.smallImg ? this.smallImg: this.largeImg ? this.largeImg : 'no Image submitted'}" />
     </picture>  
     `
+    this.root.querySelector('.placeholder').replaceWith( picture);
+  }
+
+  get smallImg(){
+    return this.getAttribute('small');
+  }
+
+  get mediumImg(){
+    return this.getAttribute('medium');
+  }
+
+  get largeImg(){
+    return this.getAttribute('large');
+  }
+
+  get width(){
+    return this.getAttribute('width') ? this.getAttribute('width') + 'px' : '100%';
+  }
+
+  get height(){
+    return this.getAttribute('height') ? this.getAttribute('height') + 'px' : '100%';
+
+  }
+
+  get placeholderColor(){
+    return this.getAttribute('placeholderColor');
   }
 }
