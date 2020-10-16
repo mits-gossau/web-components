@@ -135,7 +135,7 @@ export default class Input extends Shadow() {
         opacity: 1;
       }
 
-      input:focus:not(:read-only) {
+      input:focus:not(:read-only):not(:invalid) {
         background: #fff;
         border-color: var(--border-color, var(--default-border-color));
       }
@@ -147,20 +147,6 @@ export default class Input extends Shadow() {
       input:disabled,
       input:read-only {
         cursor: not-allowed;
-      }
-
-      :host([error]) label,
-      :host([error]) input::placeholder,
-      :host([search]) button.error,
-      label.error {
-        color: var(--color-error, var(--default-color-error));
-      }
-
-      :host([error]) input,
-      input:invalid {
-        border-color: var(--color-error, var(--default-color-error));
-        color: var(--color-error, var(--default-color-error));
-        background: var(--input-color-bg-error, var(--default-input-bg-color-error));
       }
 
       :host([search]) .mui-form-group {
@@ -192,8 +178,25 @@ export default class Input extends Shadow() {
         cursor: pointer;
       }
 
+      :host([error]) label,
+      :host([error]) input::placeholder,
+      :host([search]) button.error,
+      label.error {
+        color: var(--color-error, var(--default-color-error));
+      }
+
+      :host([error]) input,
+      :host([error]) input:focus,
+      input:invalid {
+        border-color: var(--color-error, var(--default-color-error));
+        color: var(--color-error, var(--default-color-error));
+        background: var(--input-color-bg-error, var(--default-input-bg-color-error));
+        outline: none;
+        box-shadow: none;
+      }
+
       @media (hover: hover) {
-        input:hover:not(:disabled):not(:read-only) {
+        input:hover:not(:disabled):not(:read-only):not(:invalid) {
           border-color: var(--border-color, var(--default-border-color));
         }
 
@@ -201,7 +204,7 @@ export default class Input extends Shadow() {
           border-color: var(--search-input-border-color, var(--default-search-input-border-color));
         }
 
-        :host([error]) input:hover {
+        :host([error]) input:hover:not(:disabled):not(:read-only) {
           border-color: var(--color-error, var(--default-color-error));
         }
       }
@@ -288,6 +291,10 @@ export default class Input extends Shadow() {
   set error (isInvalid) {
     if (this.labelField) {
       isInvalid ? this.labelField.classList.add('error') : this.labelField.classList.remove('error');
+    }
+
+    if (this.textareaField) {
+      isInvalid ? this.textareaField.setAttribute('aria-invalid', 'true') : this.textareaField.removeAttribute('aria-invalid')
     }
 
     if (this.searchButton) {
