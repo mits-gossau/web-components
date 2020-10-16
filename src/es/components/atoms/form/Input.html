@@ -48,6 +48,7 @@
       <mui-input
         inputId="inputSearch"
         placeholder="Ihre Suche..."
+        class="search-listener"
         search
       >
         Input Search Field
@@ -59,6 +60,7 @@
         placeholder="Ihre Suche..."
         search
         type="search"
+        class="search-listener"
         disabled
       >
         Input Search Field Disabled
@@ -70,6 +72,7 @@
         placeholder="Ihre Suche..."
         search
         type="search"
+        class="search-listener"
         readonly
       >
         Input Search Field Readonly
@@ -81,6 +84,7 @@
         placeholder="Ihre Suche..."
         search
         type="search"
+        class="search-listener"
         error
       >
         Input Search Field Error
@@ -92,10 +96,14 @@
      * First level controllers and organisms are loaded and defined here (loadChildComponents)
      */
     const name = 'mui-input'
+
     import('./Input.js').then(module => [name, module.default]).then(element => {
       // don't define already existing customElements
       if (element && !customElements.get(element[0])) customElements.define(...element)
     })
+
+    document.querySelectorAll('.search-listener').forEach((element) => element.addEventListener('submitSearch', (e) => console.log(e.detail)))
+
     Array.from(document.querySelectorAll('dt')).forEach(dt => {
       const dd = document.createElement('dd')
       if (dt.querySelector('style')) {
