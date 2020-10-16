@@ -29,25 +29,25 @@ export default class Input extends Shadow() {
 
     // init configuration
     this.disabled = this.hasAttribute('disabled');
-    this.readOnly = this.hasAttribute('readonly');
+    this.readonly = this.hasAttribute('readonly');
     this.error = this.hasAttribute('error');
 
-    if (this.placeholder) this.inputField.setAttribute('placeholder', this.placeholder);
-    if (this.autocomplete) this.textareaField.setAttribute('autocomplete', this.autocomplete);
+    if (this.placeholder && this.inputField) this.inputField.setAttribute('placeholder', this.placeholder);
+    if (this.autocomplete && this.inputField) this.inputField.setAttribute('autocomplete', this.autocomplete);
+
+    if (this.search && this.searchButton && !this.readonly && !this.disabled && !this.error) {
+      this.searchButton.addEventListener('click', this.onSearch.bind(this));
+    }
   }
 
-  attributeChangedCallback (name, oldValue, newValue) {
-    if (name === 'disabled') {
-      this.disabled = this.hasAttribute('disabled');
+  disconnectedCallback () {
+    if (this.search && this.searchButton && !this.readonly && !this.disabled && !this.error) {
+      this.searchButton.removEventListener('onSearch');
     }
+  }
 
-    if (name === 'readonly') {
-      this.readOnly = this.hasAttribute('readonly');
-    }
-
-    if (name === 'error') {
-      this.error = this.hasAttribute('error');
-    }
+  attributeChangedCallback (name) {
+    this[name] = this.hasAttribute(name);
   }
 
   /**
@@ -178,6 +178,11 @@ export default class Input extends Shadow() {
         cursor: pointer;
       }
 
+      :host([disabled]) button,
+      :host([readonly]) button {
+        cursor: not-allowed;
+      }
+
       :host([error]) label,
       :host([error]) input::placeholder,
       :host([search]) button.error,
@@ -219,6 +224,16 @@ export default class Input extends Shadow() {
         ${ this.searchHtml }
       </div>
     `
+  }
+
+  onSearch() {
+    this.dispatchEvent(new CustomEvent('submitSearch', {
+      bubbles: true,
+      detail: {
+        key: this.inputId,
+        value: this.inputField.value
+      }
+    }));
   }
 
   get labelHtml () {
@@ -274,11 +289,11 @@ export default class Input extends Shadow() {
     isDisabled ? this.inputField.setAttribute('disabled', '') : this.inputField.removeAttribute('disabled')
   }
 
-  get readOnly () {
-    return this.hasAttribute('disabled')
+  get readonly () {
+    return this.hasAttribute('readonly')
   }
 
-  set readOnly (isReadOnly) {
+  set readonly (isReadOnly) {
     if (!this.inputField) return;
 
     isReadOnly ? this.inputField.setAttribute('readonly', '') : this.inputField.removeAttribute('readonly')

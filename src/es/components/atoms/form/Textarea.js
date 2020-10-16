@@ -28,25 +28,15 @@ export default class Textarea extends Shadow() {
 
     // init configuration
     this.disabled = this.hasAttribute('disabled');
-    this.readOnly = this.hasAttribute('readonly');
+    this.readonly = this.hasAttribute('readonly');
     this.error = this.hasAttribute('error');
 
-    if (this.placeholder) this.textareaField.setAttribute('placeholder', this.placeholder);
-    if (this.autocomplete) this.textareaField.setAttribute('autocomplete', this.autocomplete);
+    if (this.placeholder && this.textareaField) this.textareaField.setAttribute('placeholder', this.placeholder);
+    if (this.autocomplete && this.textareaField) this.textareaField.setAttribute('autocomplete', this.autocomplete);
   }
 
-  attributeChangedCallback (name, oldValue, newValue) {
-    if (name === 'disabled') {
-      this.disabled = this.hasAttribute('disabled');
-    }
-
-    if (name === 'readonly') {
-      this.readOnly = this.hasAttribute('readonly');
-    }
-
-    if (name === 'error') {
-      this.error = this.hasAttribute('error');
-    }
+  attributeChangedCallback (name) {
+    this[name] = this.hasAttribute(name);
   }
 
   /**
@@ -216,11 +206,11 @@ export default class Textarea extends Shadow() {
     isDisabled ? this.textareaField.setAttribute('disabled', '') : this.textareaField.removeAttribute('disabled')
   }
 
-  get readOnly () {
+  get readonly () {
     return this.hasAttribute('disabled')
   }
 
-  set readOnly (isReadOnly) {
+  set readonly (isReadOnly) {
     if (!this.textareaField) return;
 
     isReadOnly ? this.textareaField.setAttribute('readonly', '') : this.textareaField.removeAttribute('readonly')
