@@ -114,6 +114,7 @@ export default class Textarea extends Shadow() {
         display: block;
         padding: 10px 15px;
         width: 100%;
+        max-width: 100%;
         font-family: inherit;
         font-size: var(--input-font-size, var(--default-input-font-size));
         line-height: 1.5;
@@ -130,7 +131,7 @@ export default class Textarea extends Shadow() {
         opacity: 1;
       }
 
-      textarea:focus:not(:read-only) {
+      textarea:focus:not(:read-only):not(:invalid) {
         background: #fff;
         border-color: var(--border-color, var(--default-border-color));
       }
@@ -151,18 +152,21 @@ export default class Textarea extends Shadow() {
       }
 
       :host([error]) textarea,
+      :host([error]) textarea:focus,
       textarea:invalid {
         border-color: var(--color-error, var(--default-color-error));
         color: var(--color-error, var(--default-color-error));
         background: var(--input-color-bg-error, var(--default-input-bg-color-error));
+        outline: none;
+        box-shadow: none;
       }
 
       @media (hover: hover) {
-        textarea:hover:not(:disabled):not(:read-only) {
+        textarea:hover:not(:disabled):not(:read-only):not(:invalid) {
           border-color: var(--border-color, var(--default-border-color));
         }
 
-        :host([error]) textarea:hover {
+        :host([error]) textarea:hover:not(:disabled):not(:read-only) {
           border-color: var(--color-error, var(--default-color-error));
         }
       }
@@ -231,8 +235,8 @@ export default class Textarea extends Shadow() {
       isInvalid ? this.labelField.classList.add('error') : this.labelField.classList.remove('error');
     }
 
-    if (this.searchButton) {
-      isInvalid ? this.searchButton.classList.add('error') : this.searchButton.classList.remove('error');
+    if (this.textareaField) {
+      isInvalid ? this.textareaField.setAttribute('aria-invalid', 'true') : this.textareaField.removeAttribute('aria-invalid')
     }
   }
 }
