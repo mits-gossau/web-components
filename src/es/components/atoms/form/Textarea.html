@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../../../../css/fonts.css">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <title>Textarea.js</title>
+</head>
+<body>
+  <h1>Textarea.js</h1>
+  <dl>
+    <dt>
+      <mui-textarea
+        inputId="textareaDefault"
+        placeholder="My Placeholder"
+        autocomplete="name"
+      >
+        My Label for the Textarea
+      </mui-textarea>
+    </dt>
+    <dt>
+      <mui-textarea
+        inputId="textareaDisabled"
+        disabled
+      >
+        Textarea Disabled
+      </mui-textarea>
+    </dt>
+    <dt>
+      <mui-textarea
+        inputId="textareaReadOnly"
+        readonly
+      >
+        Textarea ReadOnly
+      </mui-textarea>
+    </dt>
+    <dt>
+      <mui-textarea
+        inputId="textareaError"
+        error
+        placeholder="My Placeholder"
+      >
+        Textarea Error
+      </mui-textarea>
+    </dt>
+  </dl>
+  <script rel=preload type=module>
+    /**
+     * First level controllers and organisms are loaded and defined here (loadChildComponents)
+     */
+    const name = 'mui-textarea'
+    import('./Textarea.js').then(module => [name, module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) customElements.define(...element)
+    })
+    Array.from(document.querySelectorAll('dt')).forEach(dt => {
+      const dd = document.createElement('dd')
+      if (dt.querySelector('style')) {
+        const codeCSS = document.createElement('code')
+        codeCSS.classList.add('code-css')
+        codeCSS.textContent = dt.querySelector('style').textContent
+        dd.appendChild(codeCSS)
+      }
+      if (dt.querySelector(name)) {
+        const codeHTML = document.createElement('code')
+        codeHTML.classList.add('code-html')
+        codeHTML.textContent = dt.querySelector(name).outerHTML.replace(/=""/g, '').replace(/\n[\s]{8}/, '\n  ').replace(/\n[\s]*?(\<\/)/, '\n$1')
+        dd.appendChild(codeHTML)
+      }
+      dt.after(dd)
+    })
+  </script>
+</body>
+</html>
