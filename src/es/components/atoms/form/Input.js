@@ -1,5 +1,7 @@
 // @ts-check
 
+/* global CustomEvent */
+
 import { Shadow } from '../../prototypes/Shadow.js'
 
 /**
@@ -20,6 +22,19 @@ export default class Input extends Shadow() {
     super({ mode: 'open' })
 
     this.allowedTypes = ['text', 'number', 'email', 'password', 'tel', 'url', 'search']
+    if (!this.children.length) this.labelText = this.textContent
+
+    this.onSearch = () => {
+      this.dispatchEvent(new CustomEvent('submitSearch', {
+        bubbles: true,
+        cancelable: true,
+        composed: true,
+        detail: {
+          key: this.inputId,
+          value: this.inputField.value
+        }
+      }))
+    }
   }
 
   connectedCallback () {
@@ -28,26 +43,26 @@ export default class Input extends Shadow() {
     if (this.shouldComponentRenderHTML()) this.renderHTML()
 
     // init configuration
-    this.disabled = this.hasAttribute('disabled');
-    this.readonly = this.hasAttribute('readonly');
-    this.error = this.hasAttribute('error');
+    this.disabled = this.hasAttribute('disabled')
+    this.readonly = this.hasAttribute('readonly')
+    this.error = this.hasAttribute('error')
 
-    if (this.placeholder && this.inputField) this.inputField.setAttribute('placeholder', this.placeholder);
-    if (this.autocomplete && this.inputField) this.inputField.setAttribute('autocomplete', this.autocomplete);
+    if (this.placeholder && this.inputField) this.inputField.setAttribute('placeholder', this.placeholder)
+    if (this.autocomplete && this.inputField) this.inputField.setAttribute('autocomplete', this.autocomplete)
 
     if (this.search && this.searchButton && !this.readonly && !this.disabled && !this.error) {
-      this.searchButton.addEventListener('click', this.onSearch);
+      this.searchButton.addEventListener('click', this.onSearch)
     }
   }
 
   disconnectedCallback () {
     if (this.search && this.searchButton && !this.readonly && !this.disabled && !this.error) {
-      this.searchButton.removEventListener('click', this.onSearch);
+      this.searchButton.removeEventListener('click', this.onSearch)
     }
   }
 
   attributeChangedCallback (name) {
-    this[name] = this.hasAttribute(name);
+    this[name] = this.hasAttribute(name)
   }
 
   /**
@@ -65,7 +80,7 @@ export default class Input extends Shadow() {
    * @return {boolean}
    */
   shouldComponentRenderHTML () {
-    return this.inputId;
+    return this.inputId
   }
 
   renderCSS () {
@@ -219,34 +234,22 @@ export default class Input extends Shadow() {
   renderHTML () {
     this.html = /* html */`
       <div class="mui-form-group">
-        ${ this.renderLabelHTML }
+        ${this.renderLabelHTML()}
         <input id="${this.inputId}" name="${this.inputId}" type="${this.inputType}" />
-        ${ this.renderSarchHTML }
+        ${this.renderSearchHTML()}
       </div>
     `
   }
 
-  onSearch = () => {
-    this.dispatchEvent(new CustomEvent('submitSearch', {
-      bubbles: true,
-      cancelable: true,
-      composed: true,
-      detail: {
-        key: this.inputId,
-        value: this.inputField.value
-      }
-    }));
+  renderLabelHTML () {
+    return this.labelText ? `<label for="${this.inputId}">${this.labelText}</label>` : ''
   }
 
-  get renderLabelHTML () {
-    return this.textContent ? `<label for="${this.inputId}">${this.textContent}</label>` : '';
-  }
-
-  get renderSarchHTML () {
+  renderSearchHTML () {
     return this.search ? `
     <button type="button" title="Suchen">
       <i class="mui-icon-search">Suchen</i>
-    </button>` : '';
+    </button>` : ''
   }
 
   get inputId () {
@@ -257,29 +260,24 @@ export default class Input extends Shadow() {
     return (this.hasAttribute('type') && this.allowedTypes.includes(this.getAttribute('type'))) ? this.getAttribute('type') : 'text'
   }
 
-  /**
-   * get the field to
-   *
-   * @return {boolean}
-   */
-  get labelField() {
-    return this.root.querySelector('label');
+  get labelField () {
+    return this.root.querySelector('label')
   }
 
   get inputField () {
-    return this.root.querySelector('input');
+    return this.root.querySelector('input')
   }
 
   get searchButton () {
-    return this.root.querySelector('button');
+    return this.root.querySelector('button')
   }
 
   get placeholder () {
-    return this.getAttribute('placeholder');
+    return this.getAttribute('placeholder')
   }
 
   get autocomplete () {
-    return this.getAttribute('autocomplete');
+    return this.getAttribute('autocomplete')
   }
 
   get search () {
@@ -291,7 +289,7 @@ export default class Input extends Shadow() {
   }
 
   set disabled (isDisabled) {
-    if (!this.inputField) return;
+    if (!this.inputField) return
 
     isDisabled ? this.inputField.setAttribute('disabled', '') : this.inputField.removeAttribute('disabled')
   }
@@ -301,7 +299,7 @@ export default class Input extends Shadow() {
   }
 
   set readonly (isReadOnly) {
-    if (!this.inputField) return;
+    if (!this.inputField) return
 
     isReadOnly ? this.inputField.setAttribute('readonly', '') : this.inputField.removeAttribute('readonly')
   }
@@ -312,7 +310,7 @@ export default class Input extends Shadow() {
 
   set error (isInvalid) {
     if (this.labelField) {
-      isInvalid ? this.labelField.classList.add('error') : this.labelField.classList.remove('error');
+      isInvalid ? this.labelField.classList.add('error') : this.labelField.classList.remove('error')
     }
 
     if (this.textareaField) {
@@ -320,7 +318,7 @@ export default class Input extends Shadow() {
     }
 
     if (this.searchButton) {
-      isInvalid ? this.searchButton.classList.add('error') : this.searchButton.classList.remove('error');
+      isInvalid ? this.searchButton.classList.add('error') : this.searchButton.classList.remove('error')
     }
   }
 }
