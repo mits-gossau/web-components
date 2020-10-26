@@ -166,13 +166,13 @@ export default class Textarea extends Shadow() {
   renderHTML () {
     this.html = /* html */`
       <div class="mui-form-group">
-        ${ this.labelHtml }
+        ${ this.renderLabelHTML }
         <textarea id="${this.inputId}" name="${this.inputId}"></textarea>
       </div>
     `
   }
 
-  get labelHtml () {
+  get renderLabelHTML () {
     return this.textContent ? `<label for="${this.inputId}">${this.textContent}</label>` : '';
   }
 
