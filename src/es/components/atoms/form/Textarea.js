@@ -19,6 +19,8 @@ export default class Textarea extends Shadow() {
     super({ mode: 'open' })
 
     this.allowedTypes = ['text', 'number', 'email', 'password', 'tel', 'url', 'search']
+    if (!this.children.length) this.labelText = this.textContent
+
   }
 
   connectedCallback () {
@@ -27,16 +29,16 @@ export default class Textarea extends Shadow() {
     if (this.shouldComponentRenderHTML()) this.renderHTML()
 
     // init configuration
-    this.disabled = this.hasAttribute('disabled');
-    this.readonly = this.hasAttribute('readonly');
-    this.error = this.hasAttribute('error');
+    this.disabled = this.hasAttribute('disabled')
+    this.readonly = this.hasAttribute('readonly')
+    this.error = this.hasAttribute('error')
 
-    if (this.placeholder && this.textareaField) this.textareaField.setAttribute('placeholder', this.placeholder);
-    if (this.autocomplete && this.textareaField) this.textareaField.setAttribute('autocomplete', this.autocomplete);
+    if (this.placeholder && this.textareaField) this.textareaField.setAttribute('placeholder', this.placeholder)
+    if (this.autocomplete && this.textareaField) this.textareaField.setAttribute('autocomplete', this.autocomplete)
   }
 
   attributeChangedCallback (name) {
-    this[name] = this.hasAttribute(name);
+    this[name] = this.hasAttribute(name)
   }
 
   /**
@@ -54,7 +56,7 @@ export default class Textarea extends Shadow() {
    * @return {boolean}
    */
   shouldComponentRenderHTML () {
-    return this.inputId;
+    return this.inputId
   }
 
   renderCSS () {
@@ -166,34 +168,34 @@ export default class Textarea extends Shadow() {
   renderHTML () {
     this.html = /* html */`
       <div class="mui-form-group">
-        ${ this.renderLabelHTML }
+        ${this.renderLabelHTML}
         <textarea id="${this.inputId}" name="${this.inputId}"></textarea>
       </div>
     `
   }
 
   get renderLabelHTML () {
-    return this.textContent ? `<label for="${this.inputId}">${this.textContent}</label>` : '';
+    return this.labelText ? `<label for="${this.inputId}">${this.labelText}</label>` : ''
   }
 
   get inputId () {
     return this.getAttribute('inputId')
   }
 
-  get labelField() {
-    return this.root.querySelector('label');
+  get labelField () {
+    return this.root.querySelector('label')
   }
 
   get textareaField () {
-    return this.root.querySelector('textarea');
+    return this.root.querySelector('textarea')
   }
 
   get placeholder () {
-    return this.getAttribute('placeholder');
+    return this.getAttribute('placeholder')
   }
 
   get autocomplete () {
-    return this.getAttribute('autocomplete');
+    return this.getAttribute('autocomplete')
   }
 
   get disabled () {
@@ -201,7 +203,7 @@ export default class Textarea extends Shadow() {
   }
 
   set disabled (isDisabled) {
-    if (!this.textareaField) return;
+    if (!this.textareaField) return
 
     isDisabled ? this.textareaField.setAttribute('disabled', '') : this.textareaField.removeAttribute('disabled')
   }
@@ -211,7 +213,7 @@ export default class Textarea extends Shadow() {
   }
 
   set readonly (isReadOnly) {
-    if (!this.textareaField) return;
+    if (!this.textareaField) return
 
     isReadOnly ? this.textareaField.setAttribute('readonly', '') : this.textareaField.removeAttribute('readonly')
   }
@@ -222,7 +224,7 @@ export default class Textarea extends Shadow() {
 
   set error (isInvalid) {
     if (this.labelField) {
-      isInvalid ? this.labelField.classList.add('error') : this.labelField.classList.remove('error');
+      isInvalid ? this.labelField.classList.add('error') : this.labelField.classList.remove('error')
     }
 
     if (this.textareaField) {
