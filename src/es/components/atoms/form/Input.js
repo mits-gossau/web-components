@@ -36,13 +36,13 @@ export default class Input extends Shadow() {
     if (this.autocomplete && this.inputField) this.inputField.setAttribute('autocomplete', this.autocomplete);
 
     if (this.search && this.searchButton && !this.readonly && !this.disabled && !this.error) {
-      this.searchButton.addEventListener('click', this.onSearch.bind(this));
+      this.searchButton.addEventListener('click', this.onSearch);
     }
   }
 
   disconnectedCallback () {
     if (this.search && this.searchButton && !this.readonly && !this.disabled && !this.error) {
-      this.searchButton.removEventListener('onSearch');
+      this.searchButton.removEventListener('click', this.onSearch);
     }
   }
 
@@ -219,16 +219,18 @@ export default class Input extends Shadow() {
   renderHTML () {
     this.html = /* html */`
       <div class="mui-form-group">
-        ${ this.labelHtml }
+        ${ this.renderLabelHTML }
         <input id="${this.inputId}" name="${this.inputId}" type="${this.inputType}" />
-        ${ this.searchHtml }
+        ${ this.renderSarchHTML }
       </div>
     `
   }
 
-  onSearch() {
+  onSearch = () => {
     this.dispatchEvent(new CustomEvent('submitSearch', {
       bubbles: true,
+      cancelable: true,
+      composed: true,
       detail: {
         key: this.inputId,
         value: this.inputField.value
@@ -236,11 +238,11 @@ export default class Input extends Shadow() {
     }));
   }
 
-  get labelHtml () {
+  get renderLabelHTML () {
     return this.textContent ? `<label for="${this.inputId}">${this.textContent}</label>` : '';
   }
 
-  get searchHtml () {
+  get renderSarchHTML () {
     return this.search ? `
     <button type="button" title="Suchen">
       <i class="mui-icon-search">Suchen</i>
@@ -255,6 +257,11 @@ export default class Input extends Shadow() {
     return (this.hasAttribute('type') && this.allowedTypes.includes(this.getAttribute('type'))) ? this.getAttribute('type') : 'text'
   }
 
+  /**
+   * get the field to
+   *
+   * @return {boolean}
+   */
   get labelField() {
     return this.root.querySelector('label');
   }
