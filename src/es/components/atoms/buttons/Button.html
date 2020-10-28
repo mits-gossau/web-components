@@ -80,30 +80,18 @@
     </dt>
   </dl>
   <script rel=preload type=module>
+    import componentList from '/src/es/helpers/ComponentList.js';
     /**
      * First level controllers and organisms are loaded and defined here (loadChildComponents)
      */
     const name = 'mui-button'
+
     import('./Button.js').then(module => [name, module.default]).then(element => {
       // don't define already existing customElements
       if (element && !customElements.get(element[0])) customElements.define(...element)
     })
-    Array.from(document.querySelectorAll('dt')).forEach(dt => {
-      const dd = document.createElement('dd')
-      if (dt.querySelector('style')) {
-        const codeCSS = document.createElement('code')
-        codeCSS.classList.add('code-css')
-        codeCSS.textContent = dt.querySelector('style').textContent
-        dd.appendChild(codeCSS)
-      }
-      if (dt.querySelector(name)) {
-        const codeHTML = document.createElement('code')
-        codeHTML.classList.add('code-html')
-        codeHTML.textContent = dt.querySelector(name).outerHTML.replace(/=""/g, '').replace(/\n[\s]{8}/, '\n  ').replace(/\n[\s]*?(\<\/)/, '\n$1')
-        dd.appendChild(codeHTML)
-      }
-      dt.after(dd)
-    })
+
+    componentList(name);
   </script>
 </body>
 </html>

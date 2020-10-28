@@ -20,7 +20,6 @@ export default class Textarea extends Shadow() {
 
     this.allowedTypes = ['text', 'number', 'email', 'password', 'tel', 'url', 'search']
     if (!this.children.length) this.labelText = this.textContent
-
   }
 
   connectedCallback () {
