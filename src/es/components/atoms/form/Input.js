@@ -150,6 +150,11 @@ export default class Input extends Shadow() {
         opacity: 1;
       }
 
+      input:focus {
+        outline: none;
+        box-shadow: none;
+      }
+
       input:focus:not(:read-only):not(:invalid) {
         background: #fff;
         border-color: var(--border-color, var(--default-border-color));
@@ -211,8 +216,6 @@ export default class Input extends Shadow() {
         border-color: var(--color-error, var(--default-color-error));
         color: var(--color-error, var(--default-color-error));
         background: var(--input-color-bg-error, var(--default-input-bg-color-error));
-        outline: none;
-        box-shadow: none;
       }
 
       @media (hover: hover) {
