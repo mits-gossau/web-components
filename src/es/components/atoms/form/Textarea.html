@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../../../../css/fonts.css">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <title>Textarea.js</title>
+</head>
+<body>
+  <h1>Textarea.js</h1>
+  <dl>
+    <dt>
+      <mui-textarea
+        inputId="textareaDefault"
+        placeholder="My Placeholder"
+        autocomplete="name"
+      >
+        My Label for the Textarea
+      </mui-textarea>
+    </dt>
+    <dt>
+      <mui-textarea
+        inputId="textareaDisabled"
+        disabled
+      >
+        Textarea Disabled
+      </mui-textarea>
+    </dt>
+    <dt>
+      <mui-textarea
+        inputId="textareaReadOnly"
+        readonly
+      >
+        Textarea ReadOnly
+      </mui-textarea>
+    </dt>
+    <dt>
+      <mui-textarea
+        inputId="textareaError"
+        error
+        placeholder="My Placeholder"
+      >
+        Textarea Error
+      </mui-textarea>
+    </dt>
+  </dl>
+  <script rel=preload type=module>
+    import componentList from '/src/es/helpers/ComponentList.js';
+
+    const name = 'mui-textarea'
+    import('./Textarea.js').then(module => [name, module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) customElements.define(...element)
+    })
+
+    componentList(name);
+  </script>
+</body>
+</html>

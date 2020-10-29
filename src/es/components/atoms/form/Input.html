@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../../../../css/fonts.css">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <title>Input.js</title>
+</head>
+<body>
+  <h1>Input.js</h1>
+  <dl>
+    <dt>
+      <mui-input
+        inputId="inputDefault"
+        placeholder="My Placeholder"
+        type="number"
+        autocomplete="postal-code"
+      >
+        My Label for the Input Field
+      </mui-input>
+    </dt>
+    <dt>
+      <mui-input
+        inputId="inputDisabled"
+        disabled
+      >
+        Input Field Disabled
+      </mui-input>
+    </dt>
+    <dt>
+      <mui-input
+        inputId="inputReadOnly"
+        readonly
+      >
+        Input Field ReadOnly
+      </mui-input>
+    </dt>
+    <dt>
+      <mui-input
+        inputId="inputError"
+        error
+        placeholder="My Placeholder"
+      >
+        Input Field Error
+      </mui-input>
+    </dt>
+    <dt>
+      <mui-input
+        inputId="inputSearch"
+        placeholder="Ihre Suche..."
+        class="search-listener"
+        search
+      >
+        Input Search Field
+      </mui-input>
+    </dt>
+    <dt>
+      <mui-input
+        inputId="inputSearchDisabled"
+        placeholder="Ihre Suche..."
+        search
+        type="search"
+        class="search-listener"
+        disabled
+      >
+        Input Search Field Disabled
+      </mui-input>
+    </dt>
+    <dt>
+      <mui-input
+        inputId="inputSearchReadOnly"
+        placeholder="Ihre Suche..."
+        search
+        type="search"
+        class="search-listener"
+        readonly
+      >
+        Input Search Field Readonly
+      </mui-input>
+    </dt>
+    <dt>
+      <mui-input
+        inputId="inputSearchError"
+        placeholder="Ihre Suche..."
+        search
+        type="search"
+        class="search-listener"
+        error
+      >
+        Input Search Field Error
+      </mui-input>
+    </dt>
+  </dl>
+  <script rel=preload type=module>
+    import componentList from '/src/es/helpers/ComponentList.js';
+
+    /**
+     * First level controllers and organisms are loaded and defined here (loadChildComponents)
+     */
+     const name = 'mui-input'
+
+    import('./Input.js').then(module => [name, module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) customElements.define(...element)
+    })
+
+    document.querySelectorAll('.search-listener').forEach((element) => element.addEventListener('submitSearch', (e) => console.log(e.detail)))
+
+    componentList(name);
+  </script>
+</body>
+</html>
