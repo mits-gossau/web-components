@@ -8,7 +8,7 @@ export default class ComponentList extends Shadow() {
   }
 
   connectedCallback () {
-    if (!this.children) return;
+    if (!this.children) return
 
     this.renderHTML()
     this.renderCSS()
@@ -17,13 +17,13 @@ export default class ComponentList extends Shadow() {
   renderHTML () {
     const list = Array.from(this.root.children).filter((i) => i.tagName === 'DT')
 
-    if (list.length === 0) return;
+    if (list.length === 0) return
 
     const dl = document.createElement('dl')
 
     list.forEach((dt) => {
       const dd = document.createElement('dd')
-      const custom = Array.from(dt.children).find((i) => i.tagName.indexOf('MUI') !== -1);
+      const custom = Array.from(dt.children).find((i) => i.tagName.indexOf('MUI') !== -1)
 
       dl.appendChild(dt)
 
@@ -48,7 +48,7 @@ export default class ComponentList extends Shadow() {
       dl.appendChild(dd)
     })
 
-   this.html = dl;
+    this.html = dl
   }
 
   renderCSS () {
@@ -103,6 +103,6 @@ export default class ComponentList extends Shadow() {
         padding: 0 10px 0 5px;
         transform: translateY(-18px);
       }
-    `;
+    `
   }
 }
