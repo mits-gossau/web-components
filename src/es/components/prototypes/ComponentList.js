@@ -11,7 +11,8 @@ export default class ComponentList extends Shadow() {
     if (!this.children) return
 
     this.renderHTML()
-    this.renderCSS()
+
+    if (this.shouldComponentRenderCSS()) this.renderCSS()
   }
 
   renderHTML () {
@@ -49,6 +50,15 @@ export default class ComponentList extends Shadow() {
     })
 
     this.html = dl
+  }
+
+  /**
+   * evaluates if a render is necessary
+   *
+   * @return {boolean}
+   */
+  shouldComponentRenderCSS () {
+    return !this.root.querySelector('style[_css]')
   }
 
   renderCSS () {
