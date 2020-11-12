@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>Wysiwyg.js</h1>
-  <dl>
+  <component-list>
     <dt>
       <p>Wysiwyg</p>
       <mui-wysiwyg>
@@ -47,9 +47,12 @@
         <mui-button slot="button" label="Mehr anzeigen"></mui-button>
       </mui-wysiwyg>
     </dt>
-  </dl>
+  </component-list>
   <script rel="preload" type="module">
-    import componentList from '../../../helpers/ComponentList.js'
+    import('../../prototypes/ComponentList.js').then(module => ['component-list', module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) customElements.define(...element)
+    })
 
     /**
      * First level controllers and organisms are loaded and defined here (loadChildComponents)
@@ -64,8 +67,6 @@
       // don't define already existing customElements
       if (element && !customElements.get(element[0])) customElements.define(...element)
     })
-
-    componentList(name)
   </script>
 </body>
 </html>

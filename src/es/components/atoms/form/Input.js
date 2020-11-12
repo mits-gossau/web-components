@@ -39,8 +39,8 @@ export default class Input extends Shadow() {
 
   connectedCallback () {
     // render template
-    if (this.shouldComponentRenderCSS()) this.renderCSS()
     if (this.shouldComponentRenderHTML()) this.renderHTML()
+    if (this.shouldComponentRenderCSS()) this.renderCSS()
 
     // init configuration
     this.disabled = this.hasAttribute('disabled')
