@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>Button.js</h1>
-  <dl>
+  <component-list>
     <dt><mui-button small>small</mui-button></dt>
     <dt><mui-button label="default"></mui-button></dt>
     <dt><mui-button large label="large">label trumps innerText</mui-button></dt>
@@ -78,9 +78,12 @@
         <input type="file" slot="file-input">
       </mui-button>
     </dt>
-  </dl>
+  </component-list>
   <script rel=preload type=module>
-    import componentList from '../../../helpers/ComponentList.js';
+    import('../../prototypes/ComponentList.js').then(module => ['component-list', module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) customElements.define(...element)
+    })
 
     /**
      * First level controllers and organisms are loaded and defined here (loadChildComponents)
@@ -92,7 +95,6 @@
       if (element && !customElements.get(element[0])) customElements.define(...element)
     })
 
-    componentList(name);
   </script>
 </body>
 </html>

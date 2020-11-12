@@ -25,8 +25,8 @@ export default class Button extends Shadow() {
   }
 
   connectedCallback () {
-    if (this.shouldComponentRenderCSS()) this.renderCSS()
     if (this.shouldComponentRenderHTML()) this.renderHTML()
+    if (this.shouldComponentRenderCSS()) this.renderCSS()
     this.button.addEventListener('click', this.clickListener)
     this.ripple.addEventListener('animationend', this.animationendListener)
   }
@@ -202,7 +202,7 @@ export default class Button extends Shadow() {
           height: 100px;
           opacity: 0.1;
           width: 100px;
-        }                
+        }
       }
     `
   }

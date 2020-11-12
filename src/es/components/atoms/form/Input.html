@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>Input.js</h1>
-  <dl>
+  <component-list>
     <dt>
       <mui-input
         inputId="inputDefault"
@@ -48,7 +48,6 @@
       <mui-input
         inputId="inputSearch"
         placeholder="Ihre Suche..."
-        class="search-listener"
         search
       >
         Input Search Field
@@ -60,7 +59,6 @@
         placeholder="Ihre Suche..."
         search
         type="search"
-        class="search-listener"
         disabled
       >
         Input Search Field Disabled
@@ -72,7 +70,6 @@
         placeholder="Ihre Suche..."
         search
         type="search"
-        class="search-listener"
         readonly
       >
         Input Search Field Readonly
@@ -84,15 +81,17 @@
         placeholder="Ihre Suche..."
         search
         type="search"
-        class="search-listener"
         error
       >
         Input Search Field Error
       </mui-input>
     </dt>
-  </dl>
+  </component-list>
   <script rel=preload type=module>
-    import componentList from '../../../helpers/ComponentList.js';
+    import('../../prototypes/ComponentList.js').then(module => ['component-list', module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) customElements.define(...element)
+    })
 
     /**
      * First level controllers and organisms are loaded and defined here (loadChildComponents)
@@ -104,9 +103,7 @@
       if (element && !customElements.get(element[0])) customElements.define(...element)
     })
 
-    document.querySelectorAll('.search-listener').forEach((element) => element.addEventListener('submitSearch', (e) => console.log(e.detail)))
-
-    componentList(name);
+    document.querySelectorAll('[search]').forEach((element) => element.addEventListener('submitSearch', (e) => console.log(e.detail)))
   </script>
 </body>
 </html>

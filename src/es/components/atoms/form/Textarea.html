@@ -8,7 +8,7 @@
 </head>
 <body>
   <h1>Textarea.js</h1>
-  <dl>
+  <component-list>
     <dt>
       <mui-textarea
         inputId="textareaDefault"
@@ -43,17 +43,18 @@
         Textarea Error
       </mui-textarea>
     </dt>
-  </dl>
+  </component-list>
   <script rel=preload type=module>
-    import componentList from '../../../helpers/ComponentList.js';
+    import('../../prototypes/ComponentList.js').then(module => ['component-list', module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) customElements.define(...element)
+    })
 
     const name = 'mui-textarea'
     import('./Textarea.js').then(module => [name, module.default]).then(element => {
       // don't define already existing customElements
       if (element && !customElements.get(element[0])) customElements.define(...element)
     })
-
-    componentList(name);
   </script>
 </body>
 </html>
