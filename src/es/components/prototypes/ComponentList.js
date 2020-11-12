@@ -2,6 +2,14 @@
 
 import { Shadow } from './Shadow.js'
 
+/**
+ * ComponentList is a helper to generate a list to demonstrate custom-components
+ * use the dt inside the componentList to define a list item
+ * the custom components with prefix mui- as well as style tags are printed in the list inside a dd element
+ *
+ * @export
+ * @type {CustomElementConstructor}
+ */
 export default class ComponentList extends Shadow() {
   constructor () {
     super({ mode: 'open' })
