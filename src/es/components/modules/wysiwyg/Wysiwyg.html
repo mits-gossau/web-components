@@ -57,8 +57,7 @@
     /**
      * First level controllers and organisms are loaded and defined here (loadChildComponents)
      */
-    const name = 'mui-wysiwyg'
-    import('./Wysiwyg.js').then(module => [name, module.default]).then(element => {
+    import('./Wysiwyg.js').then(module => ['mui-wysiwyg', module.default]).then(element => {
       // don't define already existing customElements
       if (element && !customElements.get(element[0])) customElements.define(...element)
     })
