@@ -17,18 +17,20 @@ export default class Wysiwyg extends Shadow() {
     super({ mode: 'open' })
 
     if (this.showMore) {
-      this.toggle = () => this.toggleShowMore = !this.toggleShowMore
+      this.toggle = () => {
+        this.toggleShowMore = !this.toggleShowMore
+      }
     }
   }
 
   connectedCallback () {
     if (this.shouldComponentRenderCSS()) this.renderCSS()
     if (this.shouldComponentRenderHTML()) this.renderHTML()
-    if (this.showMoreButton) this.showMoreButton.addEventListener('click', this.toggle);
+    if (this.showMoreButton) this.showMoreButton.addEventListener('click', this.toggle)
   }
 
   disconnectedCallback () {
-    if (this.showMoreButton) this.showMoreButton.removeEventListener('click', this.toggle);
+    if (this.showMoreButton) this.showMoreButton.removeEventListener('click', this.toggle)
   }
 
   /**
@@ -137,7 +139,7 @@ export default class Wysiwyg extends Shadow() {
         <slot name="header" class="wysiwyg__header"></slot>
         ${this.showMore ? '<div class="wysiwyg__wrapper">' : ''}
         ${this.content ? `<section class="wysiwyg__content">${this.content.innerHTML}</section>` : ''}
-        ${this.showMore ? `</div><slot name="button"></slot>` : ''}
+        ${this.showMore ? '</div><slot name="button"></slot>' : ''}
       </article>
     `
   }
@@ -150,19 +152,19 @@ export default class Wysiwyg extends Shadow() {
     return this.hasAttribute('show-more')
   }
 
-  get showMoreButton() {
+  get showMoreButton () {
     return this.querySelector('[slot=button]')
   }
 
-  get showMoreWrapper() {
+  get showMoreWrapper () {
     return this.root.querySelector('.wysiwyg__wrapper')
   }
 
-  get toggleShowMore() {
+  get toggleShowMore () {
     return this.hasAttribute('toggled')
   }
 
-  set toggleShowMore(toggleShowMore) {
+  set toggleShowMore (toggleShowMore) {
     if (toggleShowMore) {
       this.setAttribute('toggled', '')
     } else {
