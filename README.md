@@ -26,3 +26,4 @@ NOTE: Within the component don't use any name spacing eg. component header don't
 4. code everything with the assumption that the web component is isolatet. Prespective from within.
 5. Web Components do not include namespaces except for children references
 6. CSS has no absolute values, all var(), except for interlocked logic
+7. render usually is prepended with an shouldComponentRender logic, especially when triggered at connectedCallback
