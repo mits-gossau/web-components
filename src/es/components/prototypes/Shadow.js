@@ -54,9 +54,26 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
         if (!node.getAttribute('slot')) shadowRoot.appendChild(node)
       })
     }
+    if (typeof options.namespace === 'string') this.setAttribute('namespace', options.namespace)
     /** @type {string} */
-    this.namespace = typeof options.namespace === 'string' ? options.namespace : this.getAttribute('namespace') || ''
+    this.namespace = this.getAttribute('namespace') || ''
   }
+
+  /**
+   * Lifecycle callback, triggered when node is attached to the dom
+   * must be here as a placeholder
+   *
+   * @return {void}
+   */
+  connectedCallback () {}
+
+  /**
+   * Lifecycle callback, triggered when node is detached from the dom
+   * must be here as a placeholder
+   *
+   * @return {void}
+   */
+  disconnectedCallback () {}
 
   /**
    * Helper function to parse object strings within attributes
@@ -141,10 +158,9 @@ export const Shadow = (ChosenHTMLElement = HTMLElement) => class Shadow extends 
     if (!style) {
       this._css.textContent = ''
     } else {
-      let textContent = this._css.textContent + style
-      if (!this.hasShadowRoot) textContent = textContent.replace(/:host\s{0,5}/g, `${this.cssSelector} `)
-      if (this.namespace) textContent = textContent.replace(/--/g, `--${this.namespace}`)
-      this._css.textContent = textContent
+      if (!this.hasShadowRoot) style = style.replace(/:host\s{0,5}/g, `${this.cssSelector} `)
+      if (this.namespace) style = style.replace(/--/g, `--${this.namespace}`)
+      this._css.textContent += style
     }
   }
 
