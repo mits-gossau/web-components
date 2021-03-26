@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../../../../css/fonts.css">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <title>Giphy.js</title>
+</head>
+<body>
+  <h1>Giphy.js</h1>
+  <component-list>
+    <dt>
+      <p>Giphy with giphy-color variables namespaced and one icon right</p>
+      <style>
+        input[slot="input"] {
+          border: 0;
+          border-bottom: 1px solid black;
+        }
+      </style>
+      <mui-giphy>
+        <input slot="input" type="text" />
+        <section slot="result"></section>
+      </mui-giphy>
+    </dt>
+  </component-list>
+  <script rel=preload type=module>
+    import('../../prototypes/ComponentList.js').then(module => ['component-list', module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) customElements.define(...element)
+    })
+
+    /**
+     * First level controllers and organisms are loaded and defined here (loadChildComponents)
+     */
+    import('./Giphy.js').then(module => ['mui-giphy', module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) {
+        customElements.define(...element)
+      }
+    })
+
+  </script>
+</body>
+</html>
