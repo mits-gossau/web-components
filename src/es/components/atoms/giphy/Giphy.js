@@ -13,9 +13,34 @@ export default class Giphy extends Shadow() {
   constructor () {
     super({ mode: 'open' })
 
+    /**
+     * Used to cancel ongoing, older fetches
+     * this makes sense, if you only expect one and most recent true result and not multiple
+     *
+     * @type {AbortController | null}
+    */
+    this.abortController = null
+    let timeout = null
     this.inputListener = event => {
-      console.log(this.result);
-      this.result.assignedNodes()[0].textContent += event.target.value
+      const q = event.target.value
+      clearTimeout(timeout)
+      timeout = setTimeout(() => {
+        if (this.abortController) this.abortController.abort()
+        this.abortController = new AbortController()
+        // https://developers.giphy.com/docs/api/endpoint#search
+        // https://developers.giphy.com/explorer/
+        fetch(`https://api.giphy.com/v1/gifs/search?api_key=${this.getAttribute('key') || 'bEonDR8ELYyNvCQPgASGoG0C3Mu9vRls'}&q=${q}&limit=${this.getAttribute('limit') || '25'}&offset=${this.getAttribute('offset') || '0'}${this.getAttribute('rating') ? `&rating=${this.getAttribute('rating')}` : ''}&lang=${this.getAttribute('lang') || 'en'}`, {
+          signal: this.abortController.signal,
+        }).then(response => {
+          if (response.status >= 200 && response.status <= 299) return response.json()
+          throw new Error(response.statusText)
+        }).then(obj => this.result.assignedNodes()[0].innerHTML = obj.data.reduce((acc, curr) => `${acc}
+          <video autoplay loop>
+            <source src="${curr.images.fixed_width.mp4}" type="video/mp4">
+            <source src="${curr.images.fixed_width.webp}" type="video/webp">
+          </video>`
+        , ''))
+      }, 200)
     }
   }
 
@@ -23,6 +48,7 @@ export default class Giphy extends Shadow() {
     if (this.shouldComponentRenderHTML()) this.renderHTML()
     if (this.shouldComponentRenderCSS()) this.renderCSS()
     if (this.input) this.input.addEventListener('input', this.inputListener)
+    if (this.getAttribute('hash') !== null && location.hash.length > 1) this.inputListener({target: {value: location.hash.replace('#', '')}})
   }
 
   disconnectedCallback () {

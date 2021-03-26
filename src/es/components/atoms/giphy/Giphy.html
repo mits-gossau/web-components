@@ -10,15 +10,37 @@
   <h1>Giphy.js</h1>
   <component-list>
     <dt>
-      <p>Giphy with giphy-color variables namespaced and one icon right</p>
+      <p>Giphy web component Search: </p>
       <style>
-        input[slot="input"] {
+        [slot="input"] {
+          align-items: center;
+          display: flex;
+        }
+        [slot="input"] input {
           border: 0;
           border-bottom: 1px solid black;
+          width: 500px;
+          margin: 50px 0;
+          height: 55px;
+          font-size: 25px;
+        }
+        [slot="input"] i {
+          transform: rotate(120deg);
+          font-size: 40px;
+        }
+        [slot="result"] {
+          align-items: center;
+          display: grid;
+          gap: 10px;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          justify-items: center;
+        }
+        [slot="result"] > * {
+          background-color: rgba(128, 124, 124, 0.7);
         }
       </style>
-      <mui-giphy>
-        <input slot="input" type="text" />
+      <mui-giphy hash>
+        <section slot="input"><input type="text" /><i>&#9740;</i></section>
         <section slot="result"></section>
       </mui-giphy>
     </dt>
