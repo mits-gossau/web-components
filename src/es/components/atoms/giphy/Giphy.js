@@ -35,12 +35,25 @@ export default class Giphy extends Shadow() {
           if (response.status >= 200 && response.status <= 299) return response.json()
           throw new Error(response.statusText)
         }).then(obj => this.result.assignedNodes()[0].innerHTML = obj.data.reduce((acc, curr) => `${acc}
-          <video autoplay loop>
-            <source src="${curr.images.fixed_width.mp4}" type="video/mp4">
-            <source src="${curr.images.fixed_width.webp}" type="video/webp">
-          </video>`
+          <figure mp4="${curr.images.original.mp4}" webp="${curr.images.original.webp}">
+            <video autoplay loop>
+              <source src="${curr.images.fixed_width.mp4}" type="video/mp4">
+              <source src="${curr.images.fixed_width.webp}" type="video/webp">
+            </video>
+          </figure>`
         , ''))
       }, 200)
+    }
+    this.clickListener = event => {
+      const target = event.target.hasAttribute('mp4') ? event.target : event.target.parentNode
+      if (target.hasAttribute('mp4') && target.hasAttribute('webp')) {
+        this.dispatchEvent(new CustomEvent(this.getAttribute('giphyClick') || 'giphyClick', {
+          detail: { mp4: target.getAttribute('mp4'), webp: target.getAttribute('webp') },
+          bubbles: true,
+          cancelable: true,
+          composed: true
+        }))
+      }
     }
   }
 
@@ -48,11 +61,13 @@ export default class Giphy extends Shadow() {
     if (this.shouldComponentRenderHTML()) this.renderHTML()
     if (this.shouldComponentRenderCSS()) this.renderCSS()
     if (this.input) this.input.addEventListener('input', this.inputListener)
+    if (this.result) this.result.addEventListener('click', this.clickListener)
     if (this.getAttribute('hash') !== null && location.hash.length > 1) this.inputListener({target: {value: location.hash.replace('#', '')}})
   }
 
   disconnectedCallback () {
     if (this.input) this.input.removeEventListener('input', this.inputListener)
+    if (this.result) this.result.removeEventListener('click', this.clickListener)
   }
 
   /**

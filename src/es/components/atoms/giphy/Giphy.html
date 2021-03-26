@@ -35,8 +35,15 @@
           grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
           justify-items: center;
         }
-        [slot="result"] > * {
+        [slot="result"] > figure {
           background-color: rgba(128, 124, 124, 0.7);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0;
+          height: 100%;
+          width: 100%;
+          padding: 5px;
         }
       </style>
       <mui-giphy hash>
@@ -60,6 +67,8 @@
         customElements.define(...element)
       }
     })
+
+    document.body.addEventListener('giphyClick', event => console.log(event, event.target, event.detail))
 
   </script>
 </body>
