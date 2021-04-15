@@ -29,6 +29,8 @@ import { Shadow } from './Shadow.js'
       }
     }
  * @property {
+      mutationObserver,
+      mutationObserverInit,
       mutationCallback,
       mutationObserveStart,
       mutationObserveStop
@@ -52,39 +54,39 @@ export const Mutation = (ChosenClass = Shadow()) => class Mutation extends Chose
      *
      * @type {MutationObserverInit}
      */
-    let mutationObserverInit = typeof options.mutationObserverInit === 'object' ? options.mutationObserverInit : Mutation.parseAttribute(this.getAttribute('mutationObserverInit'))
-    if (mutationObserverInit && (mutationObserverInit.attributes || mutationObserverInit.characterData || mutationObserverInit.childList)) {
+    this.mutationObserverInit = typeof options.mutationObserverInit === 'object' ? options.mutationObserverInit : Mutation.parseAttribute(this.getAttribute('mutationObserverInit'))
+    if (this.mutationObserverInit && (this.mutationObserverInit.attributes || this.mutationObserverInit.characterData || this.mutationObserverInit.childList)) {
       /** @type {MutationObserver} */
-      const mutationObserver = new MutationObserver(this.mutationCallback.bind(this))
+      this.mutationObserver = new MutationObserver(this.mutationCallback.bind(this))
       // add default MutationObserverInit Props
-      mutationObserverInit = Object.assign({
+      this.mutationObserverInit = Object.assign({
         attributeFilter: undefined,
         attributes: false,
-        attributeOldValue: mutationObserverInit.attributes === true,
+        attributeOldValue: this.mutationObserverInit.attributes === true,
         characterData: false,
-        characterDataOldValue: mutationObserverInit.characterData === true,
+        characterDataOldValue: this.mutationObserverInit.characterData === true,
         childList: false,
         subtree: false
-      }, mutationObserverInit)
+      }, this.mutationObserverInit)
       // attributes can not be observed on shadow, so we split this observation
-      if (this.shadowRoot && mutationObserverInit.attributes) {
-        const { attributeFilter, attributes, attributeOldValue, ...restObserverInit } = mutationObserverInit
+      if (this.shadowRoot && this.mutationObserverInit.attributes) {
+        const { attributeFilter, attributes, attributeOldValue, ...restObserverInit } = this.mutationObserverInit
         /** @return {void} */
         this.mutationObserveStart = () => {
           // @ts-ignore
-          if (restObserverInit.childList || restObserverInit.characterData) mutationObserver.observe(this.shadowRoot, restObserverInit)
+          if (restObserverInit.childList || restObserverInit.characterData) this.mutationObserver.observe(this.shadowRoot, restObserverInit)
           // @ts-ignore
-          mutationObserver.observe(this, { attributeFilter, attributes, attributeOldValue })
+          this.mutationObserver.observe(this, { attributeFilter, attributes, attributeOldValue })
         }
       } else {
         /** @return {void} */
         this.mutationObserveStart = () => {
           // @ts-ignore
-          mutationObserver.observe(this.root, mutationObserverInit)
+          this.mutationObserver.observe(this.root, this.mutationObserverInit)
         }
       }
       /** @return {void} */
-      this.mutationObserveStop = () => mutationObserver.disconnect()
+      this.mutationObserveStop = () => this.mutationObserver.disconnect()
     } else {
       /** @return {void} */
       this.mutationObserveStart = () => {}
