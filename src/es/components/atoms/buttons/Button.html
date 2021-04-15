@@ -15,7 +15,7 @@
     <dt><mui-button disabled>disabled</mui-button></dt>
     <dt><p>Button with button-width variable namespaced</p>
       <style>
-        html {
+        :host {
           --width-button-width: 100%;
         }
       </style>
@@ -24,7 +24,7 @@
     <dt>
       <p>Button with button-color variables namespaced and one slot icon left</p>
       <style>
-        html {
+        :host {
           --confirm-button-color: lightgreen;
           --confirm-button-color-hover: green;
           --confirm-border-color: rgb(121, 240, 121);
@@ -38,7 +38,7 @@
     <dt>
       <p>Button naked</p>
       <style>
-        html {
+        :host {
           --naked-button-color: transparent;
           --naked-button-color-hover: transparent;
           --naked-border-color: transparent;
@@ -52,7 +52,7 @@
     <dt>
       <p>Button with button-color variables namespaced and one icon right</p>
       <style>
-        html {
+        :host {
           --decline-button-color: red;
           --decline-button-color-hover: pink;
           --decline-border-color: rgb(212, 4, 4);

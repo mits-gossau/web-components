@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang=en>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="../../../../css/fonts.css">
+  <link rel="stylesheet" href="../../../../css/style.css">
+  <title>Giphy.js</title>
+</head>
+<body>
+  <h1>Giphy.js</h1>
+  <component-list>
+    <dt>
+      <p>Giphy web component Search: </p>
+      <style>
+        [slot="input"] {
+          align-items: center;
+          display: flex;
+        }
+        [slot="input"] input {
+          border: 0;
+          border-bottom: 1px solid black;
+          width: 500px;
+          margin: 50px 0;
+          height: 55px;
+          font-size: 25px;
+        }
+        [slot="input"] i {
+          transform: rotate(120deg);
+          font-size: 40px;
+        }
+        [slot="result"] {
+          align-items: center;
+          display: grid;
+          gap: 10px;
+          grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+          justify-items: center;
+        }
+        [slot="result"] > figure {
+          background-color: rgba(128, 124, 124, 0.7);
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          margin: 0;
+          height: 100%;
+          width: 100%;
+          padding: 5px;
+        }
+      </style>
+      <mui-giphy hash>
+        <section slot="input"><input type="text" /><i>&#9740;</i></section>
+        <section slot="result"></section>
+      </mui-giphy>
+    </dt>
+  </component-list>
+  <script rel=preload type=module>
+    import('../../prototypes/ComponentList.js').then(module => ['component-list', module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) customElements.define(...element)
+    })
+
+    /**
+     * First level controllers and organisms are loaded and defined here (loadChildComponents)
+     */
+    import('./Giphy.js').then(module => ['mui-giphy', module.default]).then(element => {
+      // don't define already existing customElements
+      if (element && !customElements.get(element[0])) {
+        customElements.define(...element)
+      }
+    })
+
+    document.body.addEventListener('giphyClick', event => console.log(event, event.target, event.detail))
+
+  </script>
+</body>
+</html>
