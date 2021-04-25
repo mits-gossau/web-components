@@ -3,3 +3,16 @@
 *::after {
   box-sizing: border-box;
 }
+
+:root {
+  --color-white: #fff;
+  --color-primary: #f60;
+  --color-primary-dark: #de450a;
+
+  --color-gray: #cfcac7;
+  --color-gray-dark: #333;
+}
+
+body {
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}

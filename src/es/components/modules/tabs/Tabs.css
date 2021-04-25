@@ -1,0 +1,55 @@
+:host {
+  display: block;
+
+  /* default colors for component */
+  --tab-color-white: #fff;
+  --tab-color-primary: #f60;
+  --tab-color-primary-dark: #de450a;
+
+  --tab-color-gray: #cfcac7;
+  --tab-color-gray-dark: #333;
+}
+
+/* checkout the id here - it's not overwritten from style.css */
+#tabsBtns {
+  display: flex;
+  width: 100%;
+  flex-flow: row nowrap;
+  gap: 1rem;
+  user-select: none;
+}
+
+::slotted([slot="tabBtn"]) {
+  padding: 0.25rem 1.25rem;
+  font-size: 1rem;
+  line-height: 1.5em; /*24px */
+  appearance: none;
+  background: transparent;
+  border: 0.125rem solid var(--colors-gray, var(--tab-color-gray));
+  border-radius: 1.125rem;
+  color: var(--colors-gray, var(--tab-color-gray));
+  cursor: pointer;
+  transition: all .2s linear;
+}
+
+::slotted([slot="tabBtn"]:not([disabled]):hover),
+::slotted([slot="tabBtn"]:not([disabled]):focus),
+::slotted([slot="tabBtn"]:not([disabled]):active) {
+  color: var(--color-gray-dark, var(--tab-color-gray-dark));
+}
+
+#tabBtn::slotted([disabled]) {
+  color: var(--color-gray, var(--tab-color-gray));
+  cursor: not-allowed;
+}
+
+/* ::slotted([slot="tabBtn"][aria-selected="true"]) */
+#tabBtn::slotted([aria-selected="true"]) {
+  border-color: var(--color-primary, var(--tab-color-primary));
+  background-color: var(--color-primary, var(--tab-color-primary));
+  color: var(--color-white, var(--tab-color-white, white));
+}
+
+#tabsContentWrapper {
+  margin: 0.938rem 0 1.875rem 0;
+}
