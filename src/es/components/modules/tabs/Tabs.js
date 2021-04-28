@@ -45,11 +45,15 @@ export default class Tabs extends Shadow() {
   }
 
   get tabBtns () {
-    return this.root.querySelector('#tabBtn') && this.root.querySelector('#tabBtn').assignedNodes({ flatten: true }) || []
+    const tabBtns = this.root.querySelector('#tabBtn')
+
+    return tabBtns ? this.root.querySelector('#tabBtn').assignedNodes({ flatten: true }) : []
   }
 
   get tabContent () {
-    return this.root.querySelector('#tabContent') && this.root.querySelector('#tabContent').assignedNodes({ flatten: true }) || []
+    const tabContent = this.root.querySelector('#tabContent')
+
+    return tabContent ? this.root.querySelector('#tabContent').assignedNodes({ flatten: true }) : []
   }
 
   get selectedElement () {

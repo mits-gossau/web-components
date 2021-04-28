@@ -42,7 +42,6 @@ export default class ComponentList extends Shadow() {
 
       dl.appendChild(dt)
 
-
       if (dt.querySelector('style')) {
         const codeCSS = document.createElement('code')
 
