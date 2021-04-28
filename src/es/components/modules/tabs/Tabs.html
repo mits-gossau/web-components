@@ -67,13 +67,12 @@
   </component-list>
 
   <template id="tabs-template">
-    <!-- component stylesheet -->
     <link rel="stylesheet" href="./Tabs.css">
 
-    <!-- markup structure -->
     <div id="tabsBtns">
       <slot id="tabBtn" name="tabBtn"></slot>
     </div>
+
     <div id="tabsContentWrapper">
       <slot id="tabContent" name="tabContent" role="tabpanel"></slot>
     </div>

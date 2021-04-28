@@ -1,5 +1,6 @@
 :host {
   display: block;
+  contain: content;
 
   /* default colors for component */
   --tab-color-white: #fff;
@@ -43,13 +44,12 @@
   cursor: not-allowed;
 }
 
-/* ::slotted([slot="tabBtn"][aria-selected="true"]) */
 #tabBtn::slotted([aria-selected="true"]) {
   border-color: var(--color-primary, var(--tab-color-primary));
   background-color: var(--color-primary, var(--tab-color-primary));
   color: var(--color-white, var(--tab-color-white, white));
 }
 
-#tabsContentWrapper {
-  margin: 0.938rem 0 1.875rem 0;
+::slotted([slot="tabContent"]) {
+  contain: content;
 }

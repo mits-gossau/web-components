@@ -14,7 +14,6 @@ export default class Tabs extends Shadow() {
   constructor () {
     super({ mode: 'open' })
 
-    // click listener where the click element (tabBtn) is selected
     this.onClick = (e) => {
       const target = e.target.slot === 'tabBtn' ? e.target : e.target.closest('[slot=tabBtn]')
 
@@ -26,15 +25,7 @@ export default class Tabs extends Shadow() {
   }
 
   connectedCallback () {
-    // renders the HTML of the template
     if (this.shouldComponentRenderHTML()) this.renderHTML()
-
-    this.setAttribute('role', 'tablist')
-
-    this.tabContent.forEach((tab, index) => {
-      tab.setAttribute('role', 'tabpanel')
-      tab.setAttribute('tabindex', 0)
-    })
 
     this.tabBtns.forEach((btn, index) => {
       btn.addEventListener('click', this.onClick)
@@ -49,18 +40,16 @@ export default class Tabs extends Shadow() {
   }
 
   get templateContent () {
-    // get Template, clone the template content, and return it
     const template = document.getElementById('tabs-template')
-    // Node.cloneNode(deep) => true - whole subtree has to be cloned
     return template.content.cloneNode(true)
   }
 
   get tabBtns () {
-    return this.root.querySelector('#tabBtn').assignedNodes({ flatten: true })
+    return this.root.querySelector('#tabBtn') && this.root.querySelector('#tabBtn').assignedNodes({ flatten: true }) || []
   }
 
   get tabContent () {
-    return this.root.querySelector('#tabContent').assignedNodes({ flatten: true })
+    return this.root.querySelector('#tabContent') && this.root.querySelector('#tabContent').assignedNodes({ flatten: true }) || []
   }
 
   get selectedElement () {
@@ -92,5 +81,12 @@ export default class Tabs extends Shadow() {
    */
   renderHTML () {
     this.html = this.templateContent
+
+    this.setAttribute('role', 'tablist')
+
+    this.tabContent.forEach((tab) => {
+      tab.setAttribute('role', 'tabpanel')
+      tab.setAttribute('tabindex', 0)
+    })
   }
 }
