@@ -30,7 +30,7 @@ export default class Giphy extends Shadow() {
         // https://developers.giphy.com/docs/api/endpoint#search
         // https://developers.giphy.com/explorer/
         fetch(`https://api.giphy.com/v1/gifs/search?api_key=${this.getAttribute('key') || 'bEonDR8ELYyNvCQPgASGoG0C3Mu9vRls'}&q=${q}&limit=${this.getAttribute('limit') || '25'}&offset=${this.getAttribute('offset') || '0'}${this.getAttribute('rating') ? `&rating=${this.getAttribute('rating')}` : ''}&lang=${this.getAttribute('lang') || 'en'}`, {
-          signal: this.abortController.signal,
+          signal: this.abortController.signal
         }).then(response => {
           if (response.status >= 200 && response.status <= 299) return response.json()
           throw new Error(response.statusText)
@@ -62,7 +62,7 @@ export default class Giphy extends Shadow() {
     if (this.shouldComponentRenderCSS()) this.renderCSS()
     if (this.input) this.input.addEventListener('input', this.inputListener)
     if (this.result) this.result.addEventListener('click', this.clickListener)
-    if (this.getAttribute('hash') !== null && location.hash.length > 1) this.inputListener({target: {value: location.hash.replace('#', '')}})
+    if (this.getAttribute('hash') !== null && location.hash.length > 1) this.inputListener({ target: { value: location.hash.replace('#', '') } })
   }
 
   disconnectedCallback () {

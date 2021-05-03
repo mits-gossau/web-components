@@ -33,6 +33,12 @@ export default class ComponentList extends Shadow() {
     list.forEach((dt) => {
       const dd = document.createElement('dd')
       const custom = Array.from(dt.children).find((i) => i.tagName.indexOf('MUI') !== -1)
+      const title = dt.querySelector('p')
+
+      dt.classList.add('componentlist-item-title')
+      dd.classList.add('componentlist-item')
+
+      if (title) title.classList.add('componentlist-name')
 
       dl.appendChild(dt)
 
@@ -71,19 +77,17 @@ export default class ComponentList extends Shadow() {
 
   renderCSS () {
     this.css = /* css */`
-      *,
-      *::before,
-      *::after {
-        box-sizing: border-box;
-      }
-
       :host {
         --default-code-bg-color: #000000;
         --default-code-color: greenyellow;
         --default-color: #000000;
+
+        display: block;
+        content: contain;
       }
 
-      code {
+      .code-html,
+      .code-style {
         background-color: var(--code-bg-color, var(--default-code-bg-color));
         color: var(--code-color, var(--default-code-color));
         display: block;
@@ -92,27 +96,28 @@ export default class ComponentList extends Shadow() {
         white-space: break-spaces;
       }
 
-      code.code-html {
+      .code-html {
         padding: 1rem 62px
       }
 
-      dt, dd {
+      .componentlist-item-title,
+      .componentlist-item {
         border: 1px solid var(--color, var(--default-color));
         padding: 10px;
         margin: 20px 0 10px;
       }
 
-      dt {
+      .componentlist-item-title {
         border-bottom: none;
         margin-bottom: 0;
       }
 
-      dd {
+      .componentlist-item {
         border-top: none;
         margin-top: 0;
       }
 
-      p {
+      .componentlist-name {
         background-color: white;
         color: var(--color, var(--default-color));
         display: inline-block;
