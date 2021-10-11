@@ -76,7 +76,7 @@ export default class Textarea extends Shadow() {
         --default-input-color: #333;
         --default-input-font-size: 18px;
 
-        --default-font-family: "Helvetica Neue Condensed", "Impact", arial, sans-serif;
+        --default-font-family: text, Helvetica, Arial, sans-serif;
         --default-font-color: #767676;
         --default-font-size: 14px;
 

@@ -71,7 +71,7 @@ export default class Wysiwyg extends Shadow() {
         --default-bg-color: #F1EFEE;
         --default-bg-gradient: linear-gradient(0deg, rgba(241,239,238,1) 0%, rgba(241,239,238,0) 100%);
 
-        --default-font-family: "Helvetica Neue Condensed", "Impact", arial, sans-serif;
+        --default-font-family: text, Helvetica, Arial, sans-serif;
         --default-font-color: #000000;
         --default-font-size: 16px;
 

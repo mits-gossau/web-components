@@ -76,7 +76,7 @@ export default class Button extends Shadow() {
         --default-button-width: auto;
         --default-font-color: white;
         --default-font-color-hover: white;
-        --default-font-family: "Helvetica Neue Condensed", "Impact", arial, sans-serif;
+        --default-font-family: display, Helvetica, Arial, sans-serif;;
         --default-font-size: 14px;
         --default-icon-size: 24px;
         display: block;
