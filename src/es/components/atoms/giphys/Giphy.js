@@ -1,5 +1,10 @@
 // @ts-check
 
+/* global AbortController */
+/* global CustomEvent */
+/* global fetch */
+/* global location */
+
 import { Shadow } from '../../prototypes/Shadow.js'
 
 /**
@@ -33,15 +38,15 @@ export default class Giphy extends Shadow() {
           signal: this.abortController.signal
         }).then(response => {
           if (response.status >= 200 && response.status <= 299) return response.json()
-          throw new Error(response.statusText)
-        }).then(obj => this.result.assignedNodes()[0].innerHTML = obj.data.reduce((acc, curr) => `${acc}
+          throw (new Error(response.statusText))
+        }).then(obj => (this.result.assignedNodes()[0].innerHTML = obj.data.reduce((acc, curr) => `${acc}
           <figure mp4="${curr.images.original.mp4}" webp="${curr.images.original.webp}">
             <video autoplay loop>
               <source src="${curr.images.fixed_width.mp4}" type="video/mp4">
               <source src="${curr.images.fixed_width.webp}" type="video/webp">
             </video>
           </figure>`
-        , ''))
+        , '')))
       }, 200)
     }
     this.clickListener = event => {
