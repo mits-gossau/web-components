@@ -19,7 +19,18 @@ export default class Button extends Shadow() {
   constructor () {
     super({ mode: 'open' })
 
-    this.clickListener = event => this.button.classList.add('active')
+    this.clickListener = event => {
+      this.button.classList.add('active')
+      if (this.getAttribute('href')) {
+        event.stopPropagation()
+        self.open(this.getAttribute('href'), this.getAttribute('target') || '_self')
+      }
+    }
+    // link behavior made accessible
+    if (this.hasAttribute('href')) {
+      this.setAttribute('data-href', this.getAttribute('href'))
+      this.setAttribute('role', 'link')
+    }
     this.animationendListener = event => this.button.classList.remove('active')
     if (!this.children.length) this.labelText = this.textContent // allow its initial textContent to become the label if there are no nodes but only text
   }
