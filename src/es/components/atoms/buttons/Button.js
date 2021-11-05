@@ -210,6 +210,15 @@ export default class Button extends Shadow() {
         button {
           margin: var(--margin-mobile, var(--margin, 0));
         }
+        #label {
+          font-size: var(--font-size-mobile, var(--font-size, var(--default-font-size)));
+        }
+        ::slotted([slot="left-icon"]) {
+          font-size: var(--icon-size-mobile, var(--icon-size, var(--default-icon-size))) !important;
+        }
+        ::slotted([slot="right-icon"]) {
+          font-size: var(--icon-size-mobile, var(--icon-size, var(--default-icon-size))) !important;
+        }
       }
       @keyframes ripple {
         from {
