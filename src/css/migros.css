@@ -6,7 +6,7 @@
  */
  html {
   --a-color-hover: var(--color-hover);
-  --a-color: var(--color-hover);
+  --a-color: var(--color-secondary);
   --a-display: block;
   --a-margin: 0;
   --a-text-align: center;
@@ -15,7 +15,7 @@
   --animation: none;
   --any-a-display: inline;
   --background-color: var(--m-white);
-  --color-hover: var(--m-orange-600);
+  --color-hover: var(--m-orange-800);
   --color-secondary: var(--m-orange-600);
   --color: var(--m-black);
   --content-spacing-mobile: 0.75rem;
