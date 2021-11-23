@@ -6,6 +6,7 @@ import { Shadow } from '../../prototypes/Shadow.js'
 
 /**
  * Creates an MSWC Button by the blueprints of:
+ * TODO: update the buttons.html with last changes (include colors.css, variables.css, fonts, remove unneeded sizes... find figma stuff)
  * https://components.migros.ch/components/atoms/buttons.html
  * https://github.com/DannyMoerkerke/material-webcomponents/blob/master/src/material-button.js
  *
@@ -80,35 +81,37 @@ export default class Button extends Shadow() {
   renderCSS () {
     this.css = /* css */`
       :host {
-        --default-border-color: #de450a;
-        --default-border-color-disabled: #e9855f;
-        --default-border-color-hover: #a33307;
-        --default-border-radius: 4px;
-        --default-button-color-hover: #cc5200;
-        --default-button-color: #ff6600;
+        --default-border-color-disabled: var(--m-orange-300, #FFDAC2);
+        --default-border-radius: 8px;
+        --default-button-color-active: var(--m-orange-900, #803300);
+        --default-button-color-hover: var(--m-orange-800, #B24800);
+        --default-button-color: var(--m-orange-600, #FF6600);
         --default-button-width: auto;
-        --default-font-color: white;
+        --default-font-color-active: white;
         --default-font-color-hover: white;
+        --default-font-color: white;
         --default-font-family: display, Helvetica, Arial, sans-serif;;
-        --default-font-size: 14px;
+        --default-font-size: 16px;
         --default-icon-size: 24px;
+        --default-line-height: 1.5em;
+        --default-padding: 10px 24px;
         display: block;
       }
       button {
         align-items: center;
         background-color: var(--button-color, var(--default-button-color));
         border: none;
-        border-bottom:2px solid var(--border-color, var(--default-border-color));
         border-radius: var(--border-radius, var(--default-border-radius));
         color: var(--font-color, var(--default-font-color));
         cursor: pointer;
         display: flex;
         justify-content: center;
         letter-spacing: .5px;
+        line-height: var(--line-height, var(--default-line-height));
         outline: none;
         overflow: hidden;
         margin: var(--margin, 0);
-        padding: 11px 15px 9px;
+        padding: var(--padding, var(--default-padding));
         position: relative;
         touch-action: manipulation;
         transition: background-color 0.3s ease-out, border-bottom-color 0.3s ease-out, color 0.3s ease-out;
@@ -116,8 +119,11 @@ export default class Button extends Shadow() {
       }
       button:hover {
         background-color: var(--button-color-hover, var(--default-button-color-hover));
-        border-bottom: 2px solid var(--border-color-hover, var(--default-border-color-hover));
         color: var(--font-color-hover, var(--default-font-color-hover));
+      }
+      button:active {
+        background-color: var(--button-color-active, var(--default-button-color-active));
+        color: var(--font-color-active, var(--default-font-color-active));
       }
       button.active .ripple {
         animation-duration: 0.4s;
@@ -161,6 +167,10 @@ export default class Button extends Shadow() {
         border-color: var(--button-color-hover, var(--default-button-color-hover));
         color: var(--button-color-hover, var(--default-button-color-hover));
       }
+      :host([outline]) button:active {
+        border-color: var(--button-color-active, var(--default-button-color-active));
+        color: var(--button-color-active, var(--default-button-color-active));
+      }
       :host([raised]) button {
         background-color: var(--button-color, var(--default-button-color));
         border: none;
@@ -168,6 +178,9 @@ export default class Button extends Shadow() {
       }
       :host([raised]) button:hover {
         background-color: var(--button-color-hover, var(--default-button-color-hover));
+      }
+      :host([raised]) button:active {
+        background-color: var(--button-color-active, var(--default-button-color-active));
       }
       :host([raised]) button[disabled]:hover {
         background-color: var(--button-color, var(--default-button-color));
@@ -178,7 +191,6 @@ export default class Button extends Shadow() {
         font-size: var(--font-size, var(--default-font-size));
         font-weight: 700;
         position: relative;
-        text-transform: uppercase;
       }
       #label.hide {
         display: none;
