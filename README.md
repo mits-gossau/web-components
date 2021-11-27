@@ -2,6 +2,10 @@
 
 POC; Reusable VanillaJS web components collection \
 
+## TODO
+
+* add on ShadowLevel Option to import css with css import through config object and attribute for shared general styles and to avoid repetition
+
 ## Roadmap
 
 * Button
