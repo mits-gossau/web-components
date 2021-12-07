@@ -116,7 +116,8 @@ export default class Input extends Shadow() {
 
       .mui-form-group {
         font-family: var(--font-family, var(--default-font-family));
-        margin-bottom: 30px;
+        margin-bottom: var(--margin-bottom, 30px);
+        max-width: var(--max-width, none);
       }
 
       label {
@@ -229,6 +230,12 @@ export default class Input extends Shadow() {
 
         :host([error]) input:hover:not(:disabled):not(:read-only) {
           border-color: var(--color-error, var(--default-color-error));
+        }
+      }
+
+      @media only screen and (max-width: ${this.getAttribute('mobile-breakpoint') ? this.getAttribute('mobile-breakpoint') : self.Environment && !!self.Environment.mobileBreakpoint ? self.Environment.mobileBreakpoint : '1000px'}) {
+        .mui-form-group {
+          max-width: var(--max-width-mobile, var(--max-width, none));
         }
       }
     `
