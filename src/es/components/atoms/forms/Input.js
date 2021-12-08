@@ -23,17 +23,26 @@ export default class Input extends Shadow() {
 
     this.allowedTypes = ['text', 'number', 'email', 'password', 'tel', 'url', 'search']
     if (!this.children.length) this.labelText = this.textContent
+    this.searchTermWrapper = ['"', '%22']
 
-    this.onSearch = () => {
-      this.dispatchEvent(new CustomEvent('submitSearch', {
-        bubbles: true,
-        cancelable: true,
-        composed: true,
-        detail: {
-          key: this.inputId,
-          value: this.inputField.value
-        }
-      }))
+    this.clickListener = event => {
+      if (!this.inputField.value) return
+      if (this.getAttribute('search')) {
+        location.href = `${this.getAttribute('search')}${this.searchTermWrapper[0]}${this.inputField.value}${this.searchTermWrapper[0]}`
+      } else {
+        this.dispatchEvent(new CustomEvent(this.getAttribute('submit-search') || 'submit-search', {
+          bubbles: true,
+          cancelable: true,
+          composed: true,
+          detail: {
+            key: this.inputId,
+            value: this.inputField.value
+          }
+        }))
+      }
+    }
+    this.keydownListener = event => {
+      if (event.keyCode === 13) return this.clickListener(event)
     }
   }
 
@@ -51,13 +60,16 @@ export default class Input extends Shadow() {
     if (this.autocomplete && this.inputField) this.inputField.setAttribute('autocomplete', this.autocomplete)
 
     if (this.search && this.searchButton && !this.readonly && !this.disabled && !this.error) {
-      this.searchButton.addEventListener('click', this.onSearch)
+      this.searchButton.addEventListener('click', this.clickListener)
+      document.addEventListener('keydown', this.keydownListener)
+      if (this.getAttribute('search') && location.href.includes(this.getAttribute('search'))) this.inputField.value = decodeURI(location.href.split(this.getAttribute('search'))[1]).replace(new RegExp(`[${this.searchTermWrapper[0]}${this.searchTermWrapper[1]}]*`, 'g'), '')
     }
   }
 
   disconnectedCallback () {
     if (this.search && this.searchButton && !this.readonly && !this.disabled && !this.error) {
-      this.searchButton.removeEventListener('click', this.onSearch)
+      this.searchButton.removeEventListener('click', this.clickListener)
+      document.removeEventListener('keydown', this.keydownListener)
     }
   }
 
@@ -132,6 +144,7 @@ export default class Input extends Shadow() {
       }
 
       input {
+        caret-color: var(--caret-color, var(--input-color, var(--default-input-color)));
         display: block;
         padding: 10px 15px;
         width: 100%;
@@ -141,7 +154,7 @@ export default class Input extends Shadow() {
         color: var(--input-color, var(--default-input-color));
         appearance: none;
         background: var(--input-bg-color, var(--default-input-bg-color));
-        border: 2px solid transparent;
+        border: var(--border, 2px solid transparent);
         border-bottom-color: var(--border-color, var(--default-border-color));
         transition: background ease-in-out .15s, border-color ease-in-out .15s;
       }
@@ -158,7 +171,8 @@ export default class Input extends Shadow() {
 
       input:focus:not(:read-only):not(:invalid) {
         background: #fff;
-        border-color: var(--border-color, var(--default-border-color));
+        border: var(--border-focus, var(--border, 2px solid transparent));
+        border-color: var(--border-color-focus, var(--border-color, var(--default-border-color)));
       }
 
       input:visited {
@@ -175,17 +189,18 @@ export default class Input extends Shadow() {
       }
 
       :host([search]) input {
-        padding-right: calc(2 * 15px + 24px);
         border-color: var(--search-input-border-color, var(--default-search-input-border-color));
         padding: 10px 15px;
-        border-radius: 4px;
+        padding-right: max(2.5em, 35px);
+        border-radius: var(--border-radius, 4px);
       }
 
       :host([search]) button {
+        height: max(2.5em, 35px);
         position: absolute;
-        bottom: 2px;
+        bottom: 0.2em;
         right: 0;
-        padding: 10px 15px;
+        padding: 5px 7.5px;
         border: 0;
         background: transparent;
         outline: none;
@@ -221,15 +236,15 @@ export default class Input extends Shadow() {
 
       @media (hover: hover) {
         input:hover:not(:disabled):not(:read-only):not(:invalid) {
-          border-color: var(--border-color, var(--default-border-color));
+          border-color: var(--border-color-hover, var(--border-color, var(--default-border-color)));
         }
 
         :host([search]) input:hover {
-          border-color: var(--search-input-border-color, var(--default-search-input-border-color));
+          border-color: var(--search-input-border-color-hover, var(--search-input-border-color, var(--default-search-input-border-color)));
         }
 
         :host([error]) input:hover:not(:disabled):not(:read-only) {
-          border-color: var(--color-error, var(--default-color-error));
+          border-color: var(--color-error-hover, var(--color-error, var(--default-color-error)));
         }
       }
 
@@ -258,7 +273,10 @@ export default class Input extends Shadow() {
   renderSearchHTML () {
     return this.search ? `
     <button type="button" title="Suchen">
-      <i class="mui-icon-search">Suchen</i>
+      <svg width="100%" height="100%" viewBox="0 0 24 24" stroke="currentColor" fill="none" xmlns="http://www.w3.org/2000/svg" fit="" preserveAspectRatio="xMidYMid meet" focusable="false">
+      <path d="M11 19C15.4183 19 19 15.4183 19 11C19 6.58172 15.4183 3 11 3C6.58172 3 3 6.58172 3 11C3 15.4183 6.58172 19 11 19Z" class="icon-stroke-width" stroke-linecap="round" stroke-linejoin="round"></path>
+      <path d="M21 21L16.65 16.65" class="icon-stroke-width" stroke-linecap="round" stroke-linejoin="round"></path>
+      </svg>
     </button>` : ''
   }
 
