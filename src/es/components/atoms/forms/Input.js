@@ -212,6 +212,7 @@ export default class Input extends Shadow() {
         color: var(--icon-color, var(--default-icon-color));
         font-style: normal;
         cursor: pointer;
+        width: 3em;
       }
 
       :host([disabled]) button,
