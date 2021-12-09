@@ -90,7 +90,7 @@ export default class Button extends Shadow() {
         --default-font-color-active: white;
         --default-font-color-hover: white;
         --default-font-color: white;
-        --default-font-family: text, display, Helvetica, Arial, sans-serif;;
+        --default-font-family: text, Helvetica, Arial, sans-serif;;
         --default-font-size: 16px;
         --default-icon-size: 24px;
         --default-line-height: 1.5em;
