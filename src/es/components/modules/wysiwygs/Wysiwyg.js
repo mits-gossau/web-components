@@ -13,8 +13,8 @@ import { Shadow } from '../../prototypes/Shadow.js'
  * @type {CustomElementConstructor}
  */
 export default class Wysiwyg extends Shadow() {
-  constructor () {
-    super({ mode: 'open' })
+  constructor (options = {}, ...args) {
+    super(Object.assign(options, { mode: 'open' }), ...args)
 
     if (this.showMore) {
       this.toggle = () => {

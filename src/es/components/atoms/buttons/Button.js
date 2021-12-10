@@ -19,8 +19,8 @@ export default class Button extends Shadow() {
     return ['label']
   }
 
-  constructor () {
-    super({ mode: 'open' })
+  constructor (options = {}, ...args) {
+    super(Object.assign(options, { mode: 'open' }), ...args)
 
     this.clickListener = event => {
       this.button.classList.add('active')

@@ -11,8 +11,8 @@ import { Shadow } from '../../prototypes/Shadow.js'
  * @type {CustomElementConstructor}
  */
 export default class Tabs extends Shadow() {
-  constructor () {
-    super({ mode: 'open' })
+  constructor (options = {}, ...args) {
+    super(Object.assign(options, { mode: 'open' }), ...args)
 
     this.onClick = (e) => {
       const target = e.target.slot === 'tabBtn' ? e.target : e.target.closest('[slot=tabBtn]')

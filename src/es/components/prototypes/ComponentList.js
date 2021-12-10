@@ -11,8 +11,8 @@ import { Shadow } from './Shadow.js'
  * @type {CustomElementConstructor}
  */
 export default class ComponentList extends Shadow() {
-  constructor () {
-    super({ mode: 'open' })
+  constructor (options = {}, ...args) {
+    super(Object.assign(options, { mode: 'open' }), ...args)
   }
 
   connectedCallback () {

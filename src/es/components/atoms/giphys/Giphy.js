@@ -15,8 +15,8 @@ import { Shadow } from '../../prototypes/Shadow.js'
  * @type {CustomElementConstructor}
  */
 export default class Giphy extends Shadow() {
-  constructor () {
-    super({ mode: 'open' })
+  constructor (options = {}, ...args) {
+    super(Object.assign(options, { mode: 'open' }), ...args)
 
     /**
      * Used to cancel ongoing, older fetches

@@ -15,8 +15,8 @@ export default class Textarea extends Shadow() {
     return ['readonly', 'disabled', 'error']
   }
 
-  constructor () {
-    super({ mode: 'open' })
+  constructor (options = {}, ...args) {
+    super(Object.assign(options, { mode: 'open' }), ...args)
 
     this.allowedTypes = ['text', 'number', 'email', 'password', 'tel', 'url', 'search']
     if (!this.children.length) this.labelText = this.textContent
