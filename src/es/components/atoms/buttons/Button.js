@@ -14,7 +14,7 @@ import { Shadow } from '../../prototypes/Shadow.js'
  * @attribute {namespace} namespace
  * @type {CustomElementConstructor}
  */
-export default class Button extends Shadow() {
+export default class Button extends Shadow(HTMLElement) {
   static get observedAttributes () {
     return ['label']
   }

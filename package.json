@@ -1,19 +1,23 @@
 {
-    "name": "web-components",
-    "version": "0.0.1-beta",
-    "description": "Reusable VanillaJS web components collection",
-    "main": "./src/index.html",
-    "scripts": {
-        "fix": "standard --fix"
-    },
-    "author": "weedshaker@gmail.com",
-    "license": "MIT",
-    "devDependencies": {
-        "standard": "*"
-    },
-    "standard": {
-        "ignore": [
-            "/test/"
-        ]
-    }
+  "type": "module",
+  "name": "web-components",
+  "version": "0.0.1-beta",
+  "description": "Reusable VanillaJS web components collection",
+  "main": "./src/index.html",
+  "scripts": {
+    "fix": "standard --fix",
+    "analyze": "cem analyze --config cem.config.js"
+  },
+  "author": "weedshaker@gmail.com",
+  "license": "MIT",
+  "devDependencies": {
+    "@custom-elements-manifest/analyzer": "^0.5.7",
+    "standard": "*"
+  },
+  "standard": {
+    "ignore": [
+      "/test/"
+    ]
+  },
+  "customElements": "doc/custom-elements.json"
 }

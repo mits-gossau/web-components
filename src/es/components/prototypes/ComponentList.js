@@ -10,7 +10,7 @@ import { Shadow } from './Shadow.js'
  * @export
  * @type {CustomElementConstructor}
  */
-export default class ComponentList extends Shadow() {
+export default class ComponentList extends Shadow(HTMLElement) {
   constructor (options = {}, ...args) {
     super(Object.assign(options, { mode: 'open' }), ...args)
   }

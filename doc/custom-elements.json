@@ -1,0 +1,652 @@
+{
+  "schemaVersion": "1.0.0",
+  "readme": "",
+  "modules": [
+    {
+      "kind": "javascript-module",
+      "path": "src/es/components/atoms/buttons/Button.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Creates an MSWC Button by the blueprints of:\nTODO: update the buttons.html with last changes (include colors.css, variables.css, fonts, remove unneeded sizes... find figma stuff)\nhttps://components.migros.ch/components/atoms/buttons.html\nhttps://github.com/DannyMoerkerke/material-webcomponents/blob/master/src/material-button.js",
+          "name": "Button",
+          "members": [
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderCSS",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderHTML",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderCSS"
+            },
+            {
+              "kind": "method",
+              "name": "renderHTML"
+            },
+            {
+              "kind": "field",
+              "name": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "button"
+            },
+            {
+              "kind": "field",
+              "name": "label"
+            },
+            {
+              "kind": "field",
+              "name": "ripple"
+            },
+            {
+              "kind": "field",
+              "name": "clickListener"
+            },
+            {
+              "kind": "field",
+              "name": "animationendListener"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "label"
+            },
+            {
+              "type": {
+                "text": "namespace"
+              },
+              "name": "namespace"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Shadow",
+              "module": "/src/es/components/prototypes/Shadow.js"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "Button",
+            "module": "src/es/components/atoms/buttons/Button.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/es/components/atoms/forms/Input.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Creates an MSWC Textarea by the blueprints of:\nhttps://components.migros.ch/components/atoms/inputs.html\nhttps://github.com/DannyMoerkerke/material-webcomponents/blob/master/src/material-textfield.js",
+          "name": "Input",
+          "members": [
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderCSS",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderHTML",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderCSS"
+            },
+            {
+              "kind": "method",
+              "name": "renderHTML"
+            },
+            {
+              "kind": "method",
+              "name": "renderLabelHTML"
+            },
+            {
+              "kind": "method",
+              "name": "renderSearchHTML"
+            },
+            {
+              "kind": "field",
+              "name": "inputId"
+            },
+            {
+              "kind": "field",
+              "name": "inputType"
+            },
+            {
+              "kind": "field",
+              "name": "labelField"
+            },
+            {
+              "kind": "field",
+              "name": "inputField"
+            },
+            {
+              "kind": "field",
+              "name": "searchButton"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "autocomplete"
+            },
+            {
+              "kind": "field",
+              "name": "search"
+            },
+            {
+              "kind": "field",
+              "name": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "readonly"
+            },
+            {
+              "kind": "field",
+              "name": "error"
+            },
+            {
+              "kind": "field",
+              "name": "allowedTypes",
+              "type": {
+                "text": "array"
+              },
+              "default": "['text', 'number', 'email', 'password', 'tel', 'url', 'search']"
+            },
+            {
+              "kind": "field",
+              "name": "searchTermWrapper",
+              "type": {
+                "text": "array"
+              },
+              "default": "['\"', '%22']"
+            },
+            {
+              "kind": "field",
+              "name": "clickListener"
+            },
+            {
+              "kind": "field",
+              "name": "keydownListener"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "readonly"
+            },
+            {
+              "name": "disabled"
+            },
+            {
+              "name": "error"
+            },
+            {
+              "type": {
+                "text": "namespace"
+              },
+              "name": "namespace"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Shadow",
+              "module": "/src/es/components/prototypes/Shadow.js"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "Input",
+            "module": "src/es/components/atoms/forms/Input.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/es/components/atoms/forms/Textarea.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Creates an MSWC Textarea by the blueprints of:\nhttps://components.migros.ch/components/atoms/inputs.html",
+          "name": "Textarea",
+          "members": [
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderCSS",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderHTML",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderCSS"
+            },
+            {
+              "kind": "method",
+              "name": "renderHTML"
+            },
+            {
+              "kind": "field",
+              "name": "renderLabelHTML"
+            },
+            {
+              "kind": "field",
+              "name": "inputId"
+            },
+            {
+              "kind": "field",
+              "name": "labelField"
+            },
+            {
+              "kind": "field",
+              "name": "textareaField"
+            },
+            {
+              "kind": "field",
+              "name": "placeholder"
+            },
+            {
+              "kind": "field",
+              "name": "autocomplete"
+            },
+            {
+              "kind": "field",
+              "name": "disabled"
+            },
+            {
+              "kind": "field",
+              "name": "readonly"
+            },
+            {
+              "kind": "field",
+              "name": "error"
+            },
+            {
+              "kind": "field",
+              "name": "allowedTypes",
+              "type": {
+                "text": "array"
+              },
+              "default": "['text', 'number', 'email', 'password', 'tel', 'url', 'search']"
+            }
+          ],
+          "attributes": [
+            {
+              "name": "readonly"
+            },
+            {
+              "name": "disabled"
+            },
+            {
+              "name": "error"
+            },
+            {
+              "type": {
+                "text": "namespace"
+              },
+              "name": "namespace"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Shadow",
+              "module": "/src/es/components/prototypes/Shadow.js"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "Textarea",
+            "module": "src/es/components/atoms/forms/Textarea.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/es/components/atoms/giphys/Giphy.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Creates an MSWC Giphy by the blueprints of:",
+          "name": "Giphy",
+          "members": [
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderCSS",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderHTML",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderCSS"
+            },
+            {
+              "kind": "method",
+              "name": "renderHTML"
+            },
+            {
+              "kind": "field",
+              "name": "input"
+            },
+            {
+              "kind": "field",
+              "name": "result"
+            },
+            {
+              "kind": "field",
+              "name": "abortController",
+              "type": {
+                "text": "AbortController | null"
+              },
+              "description": "Used to cancel ongoing, older fetches\nthis makes sense, if you only expect one and most recent true result and not multiple",
+              "default": "null"
+            },
+            {
+              "kind": "field",
+              "name": "inputListener"
+            },
+            {
+              "kind": "field",
+              "name": "clickListener"
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "namespace"
+              },
+              "name": "namespace"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Shadow",
+              "module": "/src/es/components/prototypes/Shadow.js"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "Giphy",
+            "module": "src/es/components/atoms/giphys/Giphy.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/es/components/modules/tabs/Tabs.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Creates Tabs\nadapted from https://gist.github.com/ebidel/2d2bb0cdec3f2a16cf519dbaa791ce1b",
+          "name": "Tabs",
+          "members": [
+            {
+              "kind": "field",
+              "name": "templateContent"
+            },
+            {
+              "kind": "field",
+              "name": "tabBtns"
+            },
+            {
+              "kind": "field",
+              "name": "tabContent"
+            },
+            {
+              "kind": "field",
+              "name": "selectedElement"
+            },
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderHTML",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderHTML",
+              "description": "renders the HTML from the template"
+            },
+            {
+              "kind": "field",
+              "name": "onClick"
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "selected"
+              },
+              "description": "tab index (default the first tab is selected)",
+              "name": "preselected"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Shadow",
+              "module": "/src/es/components/prototypes/Shadow.js"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "Tabs",
+            "module": "src/es/components/modules/tabs/Tabs.js"
+          }
+        }
+      ]
+    },
+    {
+      "kind": "javascript-module",
+      "path": "src/es/components/modules/wysiwygs/Wysiwyg.js",
+      "declarations": [
+        {
+          "kind": "class",
+          "description": "Creates an customizable Wysiwyg Field",
+          "name": "Wysiwyg",
+          "members": [
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderCSS",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "shouldComponentRenderHTML",
+              "description": "evaluates if a render is necessary",
+              "return": {
+                "type": {
+                  "text": "boolean"
+                }
+              }
+            },
+            {
+              "kind": "method",
+              "name": "renderCSS"
+            },
+            {
+              "kind": "method",
+              "name": "renderHTML"
+            },
+            {
+              "kind": "field",
+              "name": "content"
+            },
+            {
+              "kind": "field",
+              "name": "showMore"
+            },
+            {
+              "kind": "field",
+              "name": "showMoreButton"
+            },
+            {
+              "kind": "field",
+              "name": "showMoreWrapper"
+            },
+            {
+              "kind": "field",
+              "name": "toggleShowMore"
+            }
+          ],
+          "attributes": [
+            {
+              "type": {
+                "text": "namespace"
+              },
+              "name": "namespace"
+            },
+            {
+              "type": {
+                "text": "show-more"
+              },
+              "description": "content",
+              "name": "toggle"
+            },
+            {
+              "type": {
+                "text": "double"
+              },
+              "description": "layout",
+              "name": "2-col"
+            }
+          ],
+          "mixins": [
+            {
+              "name": "Shadow",
+              "module": "/src/es/components/prototypes/Shadow.js"
+            }
+          ],
+          "superclass": {
+            "name": "HTMLElement"
+          },
+          "customElement": true
+        }
+      ],
+      "exports": [
+        {
+          "kind": "js",
+          "name": "default",
+          "declaration": {
+            "name": "Wysiwyg",
+            "module": "src/es/components/modules/wysiwygs/Wysiwyg.js"
+          }
+        }
+      ]
+    }
+  ]
+}

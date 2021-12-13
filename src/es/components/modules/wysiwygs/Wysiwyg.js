@@ -12,7 +12,7 @@ import { Shadow } from '../../prototypes/Shadow.js'
  * @attribute {double} 2-col layout
  * @type {CustomElementConstructor}
  */
-export default class Wysiwyg extends Shadow() {
+export default class Wysiwyg extends Shadow(HTMLElement) {
   constructor (options = {}, ...args) {
     super(Object.assign(options, { mode: 'open' }), ...args)
 
