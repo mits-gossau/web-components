@@ -8,8 +8,19 @@
       "declarations": [
         {
           "kind": "class",
-          "description": "Creates an MSWC Button by the blueprints of:\nTODO: update the buttons.html with last changes (include colors.css, variables.css, fonts, remove unneeded sizes... find figma stuff)\nhttps://components.migros.ch/components/atoms/buttons.html\nhttps://github.com/DannyMoerkerke/material-webcomponents/blob/master/src/material-button.js",
+          "description": "",
           "name": "Button",
+          "cssProperties": [
+            {
+              "description": "var(--m-orange-300, #FFDAC2) - Controls the border color",
+              "name": "--default-border-color-disabled:"
+            },
+            {
+              "description": "Controls the border radius",
+              "name": "--default-border-radius",
+              "default": "8px"
+            }
+          ],
           "members": [
             {
               "kind": "method",
@@ -64,6 +75,15 @@
               "name": "animationendListener"
             }
           ],
+          "events": [
+            {
+              "type": {
+                "text": "Event"
+              },
+              "description": "some description for typed-event",
+              "name": "typed-event"
+            }
+          ],
           "attributes": [
             {
               "name": "label"
@@ -84,6 +104,8 @@
           "superclass": {
             "name": "HTMLElement"
           },
+          "tagName": "mui-button",
+          "summary": "Creates an MSWC Button by the blueprints of:\nTODO: update the buttons.html with last changes (include colors.css, variables.css, fonts, remove unneeded sizes... find figma stuff)\nhttps://components.migros.ch/components/atoms/buttons.html\nhttps://github.com/DannyMoerkerke/material-webcomponents/blob/master/src/material-button.js",
           "customElement": true
         }
       ],

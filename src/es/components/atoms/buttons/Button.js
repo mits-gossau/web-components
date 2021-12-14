@@ -5,14 +5,19 @@
 import { Shadow } from '../../prototypes/Shadow.js'
 
 /**
- * Creates an MSWC Button by the blueprints of:
+ * 
+ *  @summary Creates an MSWC Button by the blueprints of:
  * TODO: update the buttons.html with last changes (include colors.css, variables.css, fonts, remove unneeded sizes... find figma stuff)
  * https://components.migros.ch/components/atoms/buttons.html
  * https://github.com/DannyMoerkerke/material-webcomponents/blob/master/src/material-button.js
+ * 
+ * @tag mui-button
  *
- * @export
+ * @cssprop --default-border-color-disabled: var(--m-orange-300, #FFDAC2) - Controls the border color
+ * @cssprop [--default-border-radius=8px] - Controls the border radius
+ * 
  * @attribute {namespace} namespace
- * @type {CustomElementConstructor}
+ * @event {Event} click-event - some description for click-event
  */
 export default class Button extends Shadow(HTMLElement) {
   static get observedAttributes () {
