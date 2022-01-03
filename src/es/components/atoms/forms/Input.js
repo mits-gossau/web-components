@@ -92,7 +92,7 @@ export default class Input extends Shadow() {
    * @return {boolean}
    */
   shouldComponentRenderHTML () {
-    return this.inputId
+    return !this.inputField
   }
 
   renderCSS () {

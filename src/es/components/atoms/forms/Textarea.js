@@ -55,7 +55,7 @@ export default class Textarea extends Shadow() {
    * @return {boolean}
    */
   shouldComponentRenderHTML () {
-    return this.inputId
+    return !this.textareaField
   }
 
   renderCSS () {
