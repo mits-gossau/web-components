@@ -24,7 +24,7 @@ export default class Button extends Shadow() {
 
     this.clickListener = event => {
       this.button.classList.add('active')
-      if (this.getAttribute('href')) {
+      if (this.hasAttribute('href')) {
         event.stopPropagation()
         self.open(this.getAttribute('href'), this.getAttribute('target') || '_self', this.hasAttribute('rel') ? `rel=${this.getAttribute('rel')}` : '')
       }
