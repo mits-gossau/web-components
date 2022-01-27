@@ -10,7 +10,7 @@ import { Shadow } from '../../prototypes/Shadow.js'
  * @attribute {selected} preselected tab index (default the first tab is selected)
  * @type {CustomElementConstructor}
  */
-export default class Tabs extends Shadow() {
+export default class Tabs extends Shadow(HTMLElement) {
   constructor (options = {}, ...args) {
     super(Object.assign(options, { mode: 'open' }), ...args)
 

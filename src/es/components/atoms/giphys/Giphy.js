@@ -14,7 +14,7 @@ import { Shadow } from '../../prototypes/Shadow.js'
  * @attribute {namespace} namespace
  * @type {CustomElementConstructor}
  */
-export default class Giphy extends Shadow() {
+export default class Giphy extends Shadow(HTMLElement) {
   constructor (options = {}, ...args) {
     super(Object.assign(options, { mode: 'open' }), ...args)
 

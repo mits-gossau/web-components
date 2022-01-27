@@ -10,7 +10,7 @@ import { Shadow } from '../../prototypes/Shadow.js'
  * @attribute {namespace} namespace
  * @type {CustomElementConstructor}
  */
-export default class Textarea extends Shadow() {
+export default class Textarea extends Shadow(HTMLElement) {
   static get observedAttributes () {
     return ['readonly', 'disabled', 'error']
   }
